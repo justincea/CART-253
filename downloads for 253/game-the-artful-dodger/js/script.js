@@ -23,7 +23,7 @@ let enemyY;
 let enemySize = 50;
 
 // The speed and velocity of our enemy circle
-let enemySpeed = 3.5;
+let enemySpeed = 5;
 let enemyVX = 5;
 
 // How many dodges the player has made
@@ -53,14 +53,8 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A light background
-  background(71, 154, 222);
-  // Display the number of successful clicks (the score)
-textAlign(RIGHT,TOP);
-textSize(64);
-fill(255);
-text(dodges,width,0);
-textFont('Georgia');
+  // A pink background
+  background(255,220,220);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -95,8 +89,6 @@ textFont('Georgia');
   // Update the enemy's position based on its velocity
   enemyX = enemyX + enemyVX;
 
-
-
   // Check if the enemy and avatar overlap - if they do the player loses
   // We do this by checking if the distance between the centre of the enemy
   // and the centre of the avatar is less that their combined radii
@@ -106,16 +98,11 @@ textFont('Georgia');
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
-    //RESETS THE ENEMY'S SIZE---------
-    enemySize = 50;
     // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
     // Reset the dodge counter
     dodges = 0;
-      background (255,0,0);
-    //
-    enemySpeed = 5;
   }
 
   // Check if the avatar has gone off the screen (cheating!)
@@ -127,7 +114,6 @@ textFont('Georgia');
     avatarX = width/2;
     avatarY = height/2;
     dodges = 0;
-
   }
 
   // Check if the enemy has moved all the way across the screen
@@ -139,15 +125,8 @@ textFont('Georgia');
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
-    //INCREASES THE SIZE OF THE ENEMY IF PLAYER SUCCESSFULLY DODGES ENEMY----
-    enemySize = enemySize + 5;
-    //
-    enemySpeed = enemySpeed + 1;
-    //CHANGES BACKGROUND COLOUR.
-    background (0,255,0);
-
-
   }
+
   // Display the number of successful dodges in the console
   console.log(dodges);
 
@@ -156,8 +135,8 @@ textFont('Georgia');
   // Draw the player as a circle
   ellipse(avatarX,avatarY,avatarSize,avatarSize);
 
-  // The enemy is yellow
-  fill(255, 240, 33);
+  // The enemy is red
+  fill(255,0,0);
   // Draw the enemy as a circle
   ellipse(enemyX,enemyY,enemySize,enemySize);
 
