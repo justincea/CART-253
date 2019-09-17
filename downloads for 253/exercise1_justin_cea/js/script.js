@@ -95,7 +95,7 @@ function draw() {
   rect(squareX,squareY,squareSize,squareSize);
 
 //Makes following circle Yellow
-  fill (244,232,104);
+  fill (244,232,104,10);
 // Displays the Yellow Circle
 ellipse(faceX,faceY,faceSize,faceSize);
 
