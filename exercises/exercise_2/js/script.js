@@ -10,25 +10,33 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar circle
 let avatarX;
 let avatarY;
-let avatarSize = 50;
+let avatarSize = 100;
 
 // The speed and velocity of our avatar circle
-let avatarSpeed = 10;
+let avatarSpeed = 7;
 let avatarVX = 0;
 let avatarVY = 0;
 
 // The position and size of the enemy circle
 let enemyX;
 let enemyY;
-let enemySize = 50;
+let enemySize = 100;
 
 // The speed and velocity of our enemy circle
-let enemySpeed = 3.5;
+let enemySpeed = 3.25;
 let enemyVX = 5;
 
 // How many dodges the player has made
 let dodges = 0;
 
+let img;
+
+function preload() {
+  imgA = loadImage('assets/images/plane.png');
+  imgB = loadImage('assets/images/storm.png');
+  imgC = loadImage('assets/images/bg.png');
+
+}
 // setup()
 //
 // Make the canvas, position the avatar and anemy
@@ -46,6 +54,7 @@ function setup() {
 
   // No stroke so it looks cleaner
   noStroke();
+imageMode();
 }
 
 // draw()
@@ -54,10 +63,15 @@ function setup() {
 // game over situations.
 function draw() {
   // A light background
-  background(71, 154, 222);
+  background(imgC);
+
+
+
+  //background
+
   // Display the number of successful clicks (the score)
 textAlign(RIGHT,TOP);
-textSize(64);
+textSize(50);
 fill(255);
 text(dodges,width,0);
 textFont('Georgia');
@@ -107,7 +121,7 @@ textFont('Georgia');
     enemyX = 0;
     enemyY = random(0,height);
     //RESETS THE ENEMY'S SIZE---------
-    enemySize = 50;
+    enemySize = 100;
     // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
@@ -127,6 +141,7 @@ textFont('Georgia');
     avatarX = width/2;
     avatarY = height/2;
     dodges = 0;
+      background(255, 247, 0);
 
   }
 
@@ -141,7 +156,7 @@ textFont('Georgia');
     enemyY = random(0,height);
     //INCREASES THE SIZE OF THE ENEMY IF PLAYER SUCCESSFULLY DODGES ENEMY----
     enemySize = enemySize + 5;
-    //
+    //INCREASES THE SPEED OF THE ENEMY IF PLAYER SUCCESSFULLY DODGES ENEMY----
     enemySpeed = enemySpeed + 1;
     //CHANGES BACKGROUND COLOUR.
     background (0,255,0);
@@ -154,11 +169,11 @@ textFont('Georgia');
   // The player is black
   fill(0);
   // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
+  image(imgA,avatarX,avatarY,avatarSize,avatarSize);
 
   // The enemy is yellow
   fill(255, 240, 33);
   // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+  image(imgB,enemyX,enemyY,enemySize,enemySize);
 
 }
