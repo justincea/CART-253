@@ -1,9 +1,9 @@
 /******************************************************
 
 Game - The Artful Dodger
-Pippin Barr
+Justin Cea
 
-A simple dodging game with keyboard controls
+A simple dodging game with keyboard controls and various challenges
 
 ******************************************************/
 
@@ -20,7 +20,7 @@ let avatarVY = 0;
 // The position and size of the enemy circle
 let enemyX;
 let enemyY;
-let enemySize = 100;
+let enemySize = 50;
 
 // The speed and velocity of our enemy circle
 let enemySpeed = 3.25;
@@ -32,6 +32,7 @@ let dodges = 0;
 let img;
 
 function preload() {
+  //the following variables consists of the images for the avatar, enemy and background.
   imgA = loadImage('assets/images/plane.png');
   imgB = loadImage('assets/images/storm.png');
   imgC = loadImage('assets/images/bg.png');
@@ -62,16 +63,13 @@ imageMode();
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A light background
+  // Sets the drawn background.
   background(imgC);
-
-
-
-  //background
-
   // Display the number of successful clicks (the score)
 textAlign(RIGHT,TOP);
+  //Defines the size of the text.
 textSize(50);
+  //fills the text in white
 fill(255);
 text(dodges,width,0);
 textFont('Georgia');
@@ -120,15 +118,16 @@ textFont('Georgia');
     // Reset the enemy's position
     enemyX = 0;
     enemyY = random(0,height);
-    //RESETS THE ENEMY'S SIZE---------
-    enemySize = 100;
+    //if the enemy touches the avatar the enemy's size resets back to its initial size
+    enemySize = 50;
     // Reset the avatar's position
     avatarX = width/2;
     avatarY = height/2;
     // Reset the dodge counter
     dodges = 0;
+    //if player does not successfully dodge the enemy and they overlap, screen turns red.
       background (255,0,0);
-    //
+    //Resets enemy speed
     enemySpeed = 5;
   }
 
@@ -141,6 +140,7 @@ textFont('Georgia');
     avatarX = width/2;
     avatarY = height/2;
     dodges = 0;
+    // if player goes off screen, the screen flashes yellow.
       background(255, 247, 0);
 
   }
@@ -154,11 +154,11 @@ textFont('Georgia');
     // Reset the enemy's position to the left at a random height
     enemyX = 0;
     enemyY = random(0,height);
-    //INCREASES THE SIZE OF THE ENEMY IF PLAYER SUCCESSFULLY DODGES ENEMY----
+    //INCREASES THE SIZE OF THE ENEMY IF PLAYER SUCCESSFULLY DODGES ENEMY
     enemySize = enemySize + 5;
-    //INCREASES THE SPEED OF THE ENEMY IF PLAYER SUCCESSFULLY DODGES ENEMY----
+    //INCREASES THE SPEED OF THE ENEMY IF PLAYER SUCCESSFULLY DODGES ENEMY
     enemySpeed = enemySpeed + 1;
-    //CHANGES BACKGROUND COLOUR.
+    //if player succeeds a dodge, the screen will flash green.
     background (0,255,0);
 
 
