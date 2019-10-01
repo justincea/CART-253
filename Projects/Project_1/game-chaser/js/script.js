@@ -211,6 +211,9 @@ function checkEating() {
     playerHealth = playerHealth + eatHealth;
     //Increases size of player when player eats prey.
     playerRadius = playerRadius + 0.5;
+    //Player Speed becomes Slower the more it eats.
+    playerDefaultSpeed -= 0.05;
+    playerSprintSpeed -= 0.05;
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
     // Reduce the prey health
