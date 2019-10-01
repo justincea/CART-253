@@ -24,7 +24,9 @@ let playerY;
 let playerRadius = 25;
 let playerVX = 0;
 let playerVY = 0;
-let playerMaxSpeed = 15;
+let playerMaxSpeed = 5;
+let playerSprintSpeed = 10;
+let playerDefaultSpeed = 5;
 // Player health
 let playerHealth;
 let playerMaxHealth = 255;
@@ -113,6 +115,7 @@ function draw() {
 //
 // Checks arrow keys and adjusts player velocity accordingly
 function handleInput() {
+
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
     playerVX = -playerMaxSpeed;
@@ -133,7 +136,15 @@ function handleInput() {
   }
   else {
     playerVY = 0;
-  }
+}
+    if (keyIsDown(SHIFT)) {
+      playerMaxSpeed = playerSprintSpeed;
+}
+    else {
+      playerMaxSpeed = playerDefaultSpeed;
+
+  
+    }
 }
 
 // movePlayer()
