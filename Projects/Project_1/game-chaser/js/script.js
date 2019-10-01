@@ -137,6 +137,7 @@ function handleInput() {
   else {
     playerVY = 0;
 }
+//When SHIFT is held down, the player's speed increases by 10.
     if (keyIsDown(SHIFT)) {
       playerMaxSpeed = playerSprintSpeed;
 }
@@ -145,6 +146,7 @@ function handleInput() {
   playerMaxHealth = playerMaxHealth -5;
 
 }
+//When SHIFT is held down, the player's speed is set back to its initial speed, that being 5.
     else {
       playerMaxSpeed = playerDefaultSpeed;
 
