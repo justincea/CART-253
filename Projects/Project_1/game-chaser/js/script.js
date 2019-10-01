@@ -29,7 +29,7 @@ let playerSprintSpeed = 10;
 let playerDefaultSpeed = 5;
 // Player health
 let playerHealth;
-let playerMaxHealth = 300;
+let playerMaxHealth = 1000;
 // Player fill color
 let playerFill = 50;
 
@@ -209,6 +209,8 @@ function checkEating() {
   if (d < playerRadius + preyRadius) {
     // Increase the player health
     playerHealth = playerHealth + eatHealth;
+    //Increases size of player when player eats prey.
+    playerRadius = playerRadius + 0.5;
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
     // Reduce the prey health
