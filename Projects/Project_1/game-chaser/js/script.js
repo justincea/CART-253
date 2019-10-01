@@ -29,7 +29,7 @@ let playerSprintSpeed = 10;
 let playerDefaultSpeed = 5;
 // Player health
 let playerHealth;
-let playerMaxHealth = 255;
+let playerMaxHealth = 300;
 // Player fill color
 let playerFill = 50;
 
@@ -140,11 +140,16 @@ function handleInput() {
     if (keyIsDown(SHIFT)) {
       playerMaxSpeed = playerSprintSpeed;
 }
+//When SHIFT is held down, the player's health decreases by 5pts.
+  if (keyIsDown(SHIFT)) {
+  playerMaxHealth = playerMaxHealth -5;
+
+}
     else {
       playerMaxSpeed = playerDefaultSpeed;
 
-  
     }
+
 }
 
 // movePlayer()
