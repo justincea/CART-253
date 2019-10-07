@@ -32,6 +32,7 @@ let playerHealth;
 let playerMaxHealth = 1000;
 // Player fill color
 let playerFill = 50;
+let img;
 
 // Prey position, size, velocity
 let preyX;
@@ -50,12 +51,14 @@ let preyFill = 200;
 let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let preyEaten = 0;
+let backimage;
+function preload (){
+    backimage = loadImage('assets/images/bg.png');
+}
 
-// setup()
-//
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(500,500);
 
   noStroke();
 
@@ -92,7 +95,8 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100, 100, 200);
+
+  background(backimage); //draws out background.
 
   if (!gameOver) {
     handleInput();
@@ -224,8 +228,8 @@ function checkEating() {
     // Check if the prey died (health 0)
     if (preyHealth === 0) {
       // Move the "new" prey to a random position
-      preyX = random(0, width);
-      preyY = random(0, height);
+      preyX = noise(0, width);
+      preyY = noise(0, height);
       // Give it full health
       preyHealth = preyMaxHealth;
       // Track how many prey were eaten
@@ -241,14 +245,10 @@ function movePrey() {
   // Change the prey's velocity at random intervals
   // random() will be < 0.05 5% of the time, so the prey
   // will change direction on 5% of frames
-  if (random() < 0.05) {
-    // Set velocity based on random values to get a new direction
-    // and speed of movement
-    //
-    // Use map() to convert from the 0-1 range of the random() function
-    // to the appropriate range of velocities for the prey
-    preyVX = map(random(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
-    preyVY = map(random(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+  if (noise() < 0.05) {
+
+    preyVX = map(noise(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
+    preyVY = map(noise(), 0, 1, -preyMaxSpeed, preyMaxSpeed);
   }
 
   // Update prey position based on velocity
