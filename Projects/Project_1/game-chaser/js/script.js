@@ -59,15 +59,15 @@ let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let preyEaten = 0;
 let backimage;
-let playerimage;
-let preyimage;
+
 let playerCreature;
 let preyMeteor;
-
+let song;
 function preload (){
     backimage = loadImage('assets/images/bg.png');
     playerCreature = loadImage('assets/images/milo.png');
     preyMeteor = loadImage('assets/images/meteor.png');
+    song = loadSound("assets/sounds/song.mp3");
 }
 
 // Sets up the basic elements of the game
@@ -78,7 +78,10 @@ function setup() {
 
   // We're using simple functions to separate code out
   setupPrey();
+
   setupPlayer();
+
+  song.play();//allows song to play.
 }
 
 // setupPrey()
@@ -111,6 +114,8 @@ function setupPlayer() {
 function draw() {
 imageMode(CORNER);
   background(backimage); //draws out background.
+
+
 
   if (!gameOver) {
     handleInput();
@@ -316,9 +321,9 @@ function showGameOver() {
   textAlign(CENTER, CENTER);
   fill(0);
   // Set up the text to display
-  let gameOverText = ".:Game Over:.\n"; // \n means "new line"
-  gameOverText = gameOverText + "You Swallowed " + preyEaten + " METEORS\n";
-  gameOverText = gameOverText + "before you FAINTED."
+  let gameOverText = ".:GAME OVER:.\n"; // \n means "new line"
+  gameOverText = gameOverText + "you only swallowed " + preyEaten + " METEORS\n";
+  gameOverText = gameOverText + "before you FAINTED. \n Which lead to the end of \n THE WORLD."
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
