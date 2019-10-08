@@ -21,7 +21,9 @@ let gameOver = false;
 // Player position, size, velocity
 let playerX;
 let playerY;
+
 let playerRadius = 25;
+
 let playerVX = 0;
 let playerVY = 0;
 let playerMaxSpeed = 5;
@@ -29,18 +31,23 @@ let playerSprintSpeed = 10;
 let playerDefaultSpeed = 5;
 // Player health
 let playerHealth;
-let playerMaxHealth = 1000;
+let playerMaxHealth = 400;
 // Player fill color
 let playerFill = 50;
-let img;
+
 
 // Prey position, size, velocity
 let preyX;
 let preyY;
-let preyRadius = 25;
+
+let preySizeX = 50;
+let preySizeY = 50;
+
+let preyRadius = 75;
+
 let preyVX;
 let preyVY;
-let preyMaxSpeed = 4;
+let preyMaxSpeed = 10;
 // Prey health
 let preyHealth;
 let preyMaxHealth = 100;
@@ -52,8 +59,15 @@ let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let preyEaten = 0;
 let backimage;
+let playerimage;
+let preyimage;
+let playerCreature;
+let preyMeteor;
+
 function preload (){
     backimage = loadImage('assets/images/bg.png');
+    playerCreature = loadImage('assets/images/milo.png');
+    preyMeteor = loadImage('assets/images/meteor.png');
 }
 
 // Sets up the basic elements of the game
@@ -82,7 +96,7 @@ function setupPrey() {
 //
 // Initialises player position and health
 function setupPlayer() {
-  playerX = 4 * width / 5;
+  playerX = 1 * width / 5;
   playerY = height / 2;
   playerHealth = playerMaxHealth;
 }
@@ -95,7 +109,7 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-
+imageMode(CORNER);
   background(backimage); //draws out background.
 
   if (!gameOver) {
@@ -228,8 +242,8 @@ function checkEating() {
     // Check if the prey died (health 0)
     if (preyHealth === 0) {
       // Move the "new" prey to a random position
-      preyX = noise(0, width);
-      preyY = noise(0, height);
+      preyX = noise(255, width);
+      preyY = random(0, height);
       // Give it full health
       preyHealth = preyMaxHealth;
       // Track how many prey were eaten
@@ -273,18 +287,24 @@ function movePrey() {
 
 // drawPrey()
 //
-// Draw the prey as an ellipse with alpha based on health
+// Draw the Star as an ellipse with alpha based on health
 function drawPrey() {
+  push();
+  imageMode(CENTER);
   fill(preyFill, preyHealth);
-  ellipse(preyX, preyY, preyRadius * 2);
+  image(preyMeteor,preyX, preyY, preyRadius * 1.5,preyRadius * 1.5);
+  pop();
 }
 
 // drawPlayer()
 //
-// Draw the player as an ellipse with alpha value based on health
+// Draw the player as a Creature with alpha value based on health
 function drawPlayer() {
-  fill(playerFill, playerHealth);
-  ellipse(playerX, playerY, playerRadius * 2);
+push();
+  imageMode(CENTER);
+  tint(250,playerFill,playerHealth);
+  image(playerCreature,playerX, playerY, playerRadius * 3,playerRadius * 3);
+pop();
 }
 
 // showGameOver()
@@ -296,9 +316,9 @@ function showGameOver() {
   textAlign(CENTER, CENTER);
   fill(0);
   // Set up the text to display
-  let gameOverText = "GAME OVER\n"; // \n means "new line"
-  gameOverText = gameOverText + "You ate " + preyEaten + " prey\n";
-  gameOverText = gameOverText + "before you died."
+  let gameOverText = ".:Game Over:.\n"; // \n means "new line"
+  gameOverText = gameOverText + "You Swallowed " + preyEaten + " METEORS\n";
+  gameOverText = gameOverText + "before you FAINTED."
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
