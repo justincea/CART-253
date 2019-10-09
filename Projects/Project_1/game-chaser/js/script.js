@@ -240,9 +240,8 @@ function checkEating() {
     playerHealth = playerHealth + eatHealth;
     //Increases size of player when player eats prey.
     playerRadius = playerRadius + 0.5;
-    //Player Speed becomes Slower the more it eats.
-    playerDefaultSpeed -= 0.01;
-    playerSprintSpeed -= 0.01;
+
+
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
     // Reduce the prey health
@@ -252,6 +251,8 @@ function checkEating() {
 
     // Check if the prey died (health 0)
     if (preyHealth === 0) {
+      //Player Speed becomes Slower the more it eats.
+      playerDefaultSpeed = playerDefaultSpeed -0.01;
       // Move the "new" prey to a random position
       preyX = noise(255, width);
       preyY = random(0, height);
@@ -318,8 +319,8 @@ function drawPrey() {
 function drawPlayer() {
 push();
   imageMode(CENTER);
-  fill(playerHealth);
-  image(playerMilo,playerX, playerY, playerRadius * 3,playerRadius * 3);
+  fill(255,playerHealth);
+  image(playerMilo,playerX, playerY, playerRadius * 2,playerRadius * 2);
 pop();
 }
 function drawEnemy(){
