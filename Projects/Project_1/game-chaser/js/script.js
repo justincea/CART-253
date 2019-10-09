@@ -34,12 +34,23 @@ let playerHealth;
 let playerMaxHealth = 250;
 // Player fill color
 let playerFill = 50;
+//------------------------------------------//
+let enemyX;
+let enemyY;
+
+let enemyRadius = 25;
+let enemyVX = 0;
+let enemyVY = 0;
+let enemyMaxSpeed = 10;
+let enemySprintSpeed = 5;
+let enemyDefaultSpeed = 2.5;
+let enemyHealth;
+let enemyMaxHealth = 250;
 
 
 // Prey position, size, velocity
 let preyX;
 let preyY;
-
 
 let preyRadius = 75;//declares prey's size
 
@@ -57,7 +68,8 @@ let eatHealth = 10;// Amount of health obtained per frame of "eating" (overlappi
 let preyEaten = 0;// Number of prey eaten during the game (the "score")
 
 let backimage;//Declared variable for background image
-let playerCreature;//declared variable for player's appearence, in that case its a creature
+let playerMilo;//declared variable for player's appearence, in that case its a creature
+let playerLimo;//Declared Variable for Enemy Limo
 let preyMeteor;//declared variable for prey's appearence, in that case its a meteor
 
 let song;//declared variable for background music
@@ -66,10 +78,15 @@ let sparkle;//declared variable for sound effect
 
 function preload (){
     backimage = loadImage('assets/images/bg.png');
-    playerCreature = loadImage('assets/images/milo.png');
+
+    playerMilo = loadImage('assets/images/milo.png');
+    playerLimo = loadImage("assets/images/limo.png");
     preyMeteor = loadImage('assets/images/meteor.png');
+
+
     song = loadSound("assets/sounds/song.m4a");
     sparkle = loadSound("assets/sounds/sparkle.mp3")
+
 
 }
 
@@ -83,6 +100,8 @@ function setup() {
   setupPrey();
 
   setupPlayer();
+
+  setupEnemy();
 
   song.play();//allows song to play.
   song.setVolume(0.1);
@@ -107,7 +126,11 @@ function setupPlayer() {
   playerY = height / 2;
   playerHealth = playerMaxHealth;
 }
-
+function setupEnemy() {
+  enemyX = 5 * width / 1;
+  enemyY = height / 1.1;
+  enemyHealth = enemyMaxHealth;
+}
 // draw()
 //
 // While the game is active, checks input
@@ -129,6 +152,7 @@ imageMode(CORNER);
 
     drawPrey();
     drawPlayer();
+    drawEnemy();
   }
   else {
     showGameOver();
@@ -292,6 +316,25 @@ function movePrey() {
     preyY = preyY - height;
   }
 }
+//allows enemy to move, in this case enemy moves horizontally based on player's movements
+function moveEnemy() {
+
+  // Screen wrapping of enemy
+  if (preyX < 0) {
+    enemyX = enemyX + width;
+  }
+  else if (preyX > width) {
+    enemyX = enemyX - width;
+  }
+
+  if (enemyY < 0) {
+    enemyY = enemyY + height;
+  }
+  else if (preyY > height) {
+    enemyY = enemyY - height;
+  }
+
+}
 function mousePressed() {
 song.pause();
 
@@ -314,10 +357,14 @@ function drawPlayer() {
 push();
   imageMode(CENTER);
   fill(playerHealth);
-  image(playerCreature,playerX, playerY, playerRadius * 3,playerRadius * 3);
+  image(playerMilo,playerX, playerY, playerRadius * 3,playerRadius * 3);
 pop();
 }
-
+function drawEnemy(){
+  imageMode(CENTER);
+  fill(enemyHealth);
+  image(playerLimo,playerX, enemyY, enemyRadius * 3,enemyRadius * 3);
+}
 // showGameOver()
 //
 // Display text about the game being over!
