@@ -47,7 +47,7 @@ let preyRadius = 75;
 
 let preyVX;
 let preyVY;
-let preyMaxSpeed = 10;
+let preyMaxSpeed = 5;
 // Prey health
 let preyHealth;
 let preyMaxHealth = 100;
@@ -67,7 +67,7 @@ function preload (){
     backimage = loadImage('assets/images/bg.png');
     playerCreature = loadImage('assets/images/milo.png');
     preyMeteor = loadImage('assets/images/meteor.png');
-    song = loadSound("assets/sounds/song.mp3");
+    song = loadSound("assets/sounds/song.m4a");
 }
 
 // Sets up the basic elements of the game
@@ -82,6 +82,7 @@ function setup() {
   setupPlayer();
 
   song.play();//allows song to play.
+  song.setVolume(0.1);
 }
 
 // setupPrey()
@@ -289,7 +290,9 @@ function movePrey() {
     preyY = preyY - height;
   }
 }
-
+function mousePressed() {
+  song.pause();
+}
 // drawPrey()
 //
 // Draw the Star as an ellipse with alpha based on health
@@ -307,7 +310,7 @@ function drawPrey() {
 function drawPlayer() {
 push();
   imageMode(CENTER);
-  tint(250,playerFill,playerHealth);
+  fill(playerHealth);
   image(playerCreature,playerX, playerY, playerRadius * 3,playerRadius * 3);
 pop();
 }
