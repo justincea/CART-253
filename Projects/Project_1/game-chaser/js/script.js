@@ -28,7 +28,7 @@ let playerVX = 0;
 let playerVY = 0;
 let playerMaxSpeed = 10;
 let playerSprintSpeed = 5;
-let playerDefaultSpeed = 2.5;
+let playerDefaultSpeed = 1.5;
 // Player health
 let playerHealth;
 let playerMaxHealth = 250;
