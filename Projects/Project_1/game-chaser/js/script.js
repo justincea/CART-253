@@ -34,18 +34,7 @@ let playerHealth;
 let playerMaxHealth = 250;
 // Player fill color
 let playerFill = 50;
-//------------------------------------------//
-let enemyX;
-let enemyY;
 
-let enemyRadius = 25;
-let enemyVX = 0;
-let enemyVY = 0;
-let enemyMaxSpeed = 10;
-let enemySprintSpeed = 5;
-let enemyDefaultSpeed = 2.5;
-let enemyHealth;
-let enemyMaxHealth = 250;
 
 
 // Prey position, size, velocity
@@ -80,7 +69,6 @@ function preload (){
     backimage = loadImage('assets/images/bg.png');
 
     playerMilo = loadImage('assets/images/milo.png');
-    playerLimo = loadImage("assets/images/limo.png");
     preyMeteor = loadImage('assets/images/meteor.png');
 
 
@@ -100,8 +88,6 @@ function setup() {
   setupPrey();
 
   setupPlayer();
-
-  setupEnemy();
 
   song.play();//allows song to play.
   song.setVolume(0.1);
@@ -126,11 +112,7 @@ function setupPlayer() {
   playerY = height / 2;
   playerHealth = playerMaxHealth;
 }
-function setupEnemy() {
-  enemyX = 5 * width / 1;
-  enemyY = height / 1.1;
-  enemyHealth = enemyMaxHealth;
-}
+
 // draw()
 //
 // While the game is active, checks input
@@ -141,6 +123,8 @@ function setupEnemy() {
 function draw() {
 imageMode(CORNER);
   background(backimage); //draws out background.
+
+
   if (!gameOver) {
     handleInput();
 
@@ -152,7 +136,6 @@ imageMode(CORNER);
 
     drawPrey();
     drawPlayer();
-    drawEnemy();
   }
   else {
     showGameOver();
@@ -197,9 +180,7 @@ function handleInput() {
 //When SHIFT is held down, the player's speed is set back to its initial speed, that being 5.
     else {
       playerMaxSpeed = playerDefaultSpeed;
-
     }
-
 }
 
 // movePlayer()
@@ -279,7 +260,7 @@ function checkEating() {
       // Track how many prey were eaten
       preyEaten = preyEaten + 1;
       sparkle.play();//if player eats a meteor, sound plays
-      sparkle.setVolume(0.1);
+      sparkle.setVolume(0.1);//Sets the Volume of Sound
     }
   }
 }
@@ -316,27 +297,8 @@ function movePrey() {
     preyY = preyY - height;
   }
 }
-//allows enemy to move, in this case enemy moves horizontally based on player's movements
-function moveEnemy() {
-
-  // Screen wrapping of enemy
-  if (preyX < 0) {
-    enemyX = enemyX + width;
-  }
-  else if (preyX > width) {
-    enemyX = enemyX - width;
-  }
-
-  if (enemyY < 0) {
-    enemyY = enemyY + height;
-  }
-  else if (preyY > height) {
-    enemyY = enemyY - height;
-  }
-
-}
 function mousePressed() {
-song.pause();
+song.pause();//allows song to pause after mouse being clicked
 
 }
 // drawPrey()
@@ -362,8 +324,7 @@ pop();
 }
 function drawEnemy(){
   imageMode(CENTER);
-  fill(enemyHealth);
-  image(playerLimo,playerX, enemyY, enemyRadius * 3,enemyRadius * 3);
+  fill()
 }
 // showGameOver()
 //
@@ -380,6 +341,6 @@ function showGameOver() {
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 
-  song.stop();//Music Stops as soon
+  song.stop();//Music Stops as soon as Game is Over
 
 }
