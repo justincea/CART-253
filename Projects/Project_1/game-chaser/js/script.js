@@ -22,13 +22,13 @@ let gameOver = false;
 let playerX;
 let playerY;
 
-let playerRadius = 25;//declares player's size
+let playerRadius = 25;
 
 let playerVX = 0;
 let playerVY = 0;
 let playerMaxSpeed = 5;
-let playerSprintSpeed = 5;
-let playerDefaultSpeed = 2.5;
+let playerSprintSpeed = 10;
+let playerDefaultSpeed = 5;
 // Player health
 let playerHealth;
 let playerMaxHealth = 400;
@@ -40,53 +40,49 @@ let playerFill = 50;
 let preyX;
 let preyY;
 
-let preyRadius = 75;//declares prey's size
+let preySizeX = 50;
+let preySizeY = 50;
+
+let preyRadius = 75;
 
 let preyVX;
 let preyVY;
-let preyMaxSpeed = 1;// declares prey's speed
-
-let preyHealth;// Prey health
+let preyMaxSpeed = 10;
+// Prey health
+let preyHealth;
 let preyMaxHealth = 100;
-
-let preyFill = 200;// Prey fill color
+// Prey fill color
+let preyFill = 200;
 
 // Amount of health obtained per frame of "eating" (overlapping) the prey
 let eatHealth = 10;
 // Number of prey eaten during the game (the "score")
 let preyEaten = 0;
-let backimage; //Declared variable for background image
+let backimage;
 
-let playerCreature; //declared variable for player's appearence, in that case its a creature
-let preyMeteor; //declared variable for prey's appearence, in that case its a meteor
-
-let song; //declared variable for background music
-let started = false;
-let gameoversound; //declared variable for music that plays when player dies.
-
-
-
+let playerCreature;
+let preyMeteor;
+let song;
 function preload (){
     backimage = loadImage('assets/images/bg.png');
     playerCreature = loadImage('assets/images/milo.png');
     preyMeteor = loadImage('assets/images/meteor.png');
-    song = loadSound("assets/sounds/song.m4a");
-    gameoversound = loadSound("assets/sounds/gameoverSound.mp3");
+    song = loadSound("assets/sounds/song.mp3");
 }
 
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(500,500);
+
   noStroke();
+
   // We're using simple functions to separate code out
   setupPrey();
 
   setupPlayer();
-song.play();
-song.setVolume(0.5);
 
+  song.play();//allows song to play.
 }
-
 
 // setupPrey()
 //
@@ -114,12 +110,13 @@ function setupPlayer() {
 // updates positions of prey and player,
 // checks health (dying), checks eating (overlaps)
 // displays the two agents.
+// When the game is over, shows the game over screen.
 function draw() {
 imageMode(CORNER);
   background(backimage); //draws out background.
 
-  if (!started) {
-  }
+
+
   if (!gameOver) {
     handleInput();
 
@@ -133,7 +130,7 @@ imageMode(CORNER);
     drawPlayer();
   }
   else {
-    showGameOver();// When the game is over, shows the game over screen.
+    showGameOver();
   }
 }
 
@@ -214,8 +211,8 @@ function movePlayer() {
 // Reduce the player's health (happens every frame)
 // Check if the player is dead
 function updateHealth() {
-  // Reduces player's health if it doesn't eat any meteors
-  playerHealth = playerHealth - 1.5;
+  // Reduce player health
+  playerHealth = playerHealth - 0.5;
   // Constrain the result to a sensible range
   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
   // Check if the player is dead (0 health)
@@ -246,8 +243,6 @@ function checkEating() {
     preyHealth = preyHealth - eatHealth;
     // Constrain to the possible range
     preyHealth = constrain(preyHealth, 0, preyMaxHealth);
-
-
 
     // Check if the prey died (health 0)
     if (preyHealth === 0) {
@@ -312,16 +307,11 @@ function drawPrey() {
 function drawPlayer() {
 push();
   imageMode(CENTER);
-  fill(playerHealth);
+  tint(250,playerFill,playerHealth);
   image(playerCreature,playerX, playerY, playerRadius * 3,playerRadius * 3);
 pop();
 }
 
-function mousePressed() {
-  song.pause();
-
-
-}
 // showGameOver()
 //
 // Display text about the game being over!
@@ -330,12 +320,10 @@ function showGameOver() {
   textSize(32);
   textAlign(CENTER, CENTER);
   fill(0);
-
   // Set up the text to display
   let gameOverText = ".:GAME OVER:.\n"; // \n means "new line"
   gameOverText = gameOverText + "you only swallowed " + preyEaten + " METEORS\n";
   gameOverText = gameOverText + "before you FAINTED. \n Which lead to the end of \n THE WORLD."
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
-
 }
