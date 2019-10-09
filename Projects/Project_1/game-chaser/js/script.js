@@ -22,16 +22,16 @@ let gameOver = false;
 let playerX;
 let playerY;
 
-let playerRadius = 25;
+let playerRadius = 25;//declares player's size
 
 let playerVX = 0;
 let playerVY = 0;
-let playerMaxSpeed = 5;
-let playerSprintSpeed = 10;
-let playerDefaultSpeed = 5;
+let playerMaxSpeed = 10;
+let playerSprintSpeed = 5;
+let playerDefaultSpeed = 2.5;
 // Player health
 let playerHealth;
-let playerMaxHealth = 400;
+let playerMaxHealth = 250;
 // Player fill color
 let playerFill = 50;
 
@@ -40,34 +40,37 @@ let playerFill = 50;
 let preyX;
 let preyY;
 
-let preySizeX = 50;
-let preySizeY = 50;
 
-let preyRadius = 75;
+let preyRadius = 75;//declares prey's size
 
 let preyVX;
 let preyVY;
-let preyMaxSpeed = 5;
+let preyMaxSpeed = 3;// declares prey's speed
 // Prey health
 let preyHealth;
 let preyMaxHealth = 100;
 // Prey fill color
-let preyFill = 200;
+let preyFill = 200;//prey fill color
 
-// Amount of health obtained per frame of "eating" (overlapping) the prey
-let eatHealth = 10;
-// Number of prey eaten during the game (the "score")
-let preyEaten = 0;
-let backimage;
 
-let playerCreature;
-let preyMeteor;
-let song;
+let eatHealth = 10;// Amount of health obtained per frame of "eating" (overlapping) the prey
+let preyEaten = 0;// Number of prey eaten during the game (the "score")
+
+let backimage;//Declared variable for background image
+let playerCreature;//declared variable for player's appearence, in that case its a creature
+let preyMeteor;//declared variable for prey's appearence, in that case its a meteor
+
+let song;//declared variable for background music
+let sparkle;//declared variable for sound effect
+
+
 function preload (){
     backimage = loadImage('assets/images/bg.png');
     playerCreature = loadImage('assets/images/milo.png');
     preyMeteor = loadImage('assets/images/meteor.png');
     song = loadSound("assets/sounds/song.m4a");
+    sparkle = loadSound("assets/sounds/sparkle.mp3")
+
 }
 
 // Sets up the basic elements of the game
@@ -89,7 +92,7 @@ function setup() {
 //
 // Initialises prey's position, velocity, and health
 function setupPrey() {
-  preyX = width / 5;
+  preyX = width / 2;
   preyY = height / 2;
   preyVX = -preyMaxSpeed;
   preyVY = preyMaxSpeed;
@@ -115,9 +118,6 @@ function setupPlayer() {
 function draw() {
 imageMode(CORNER);
   background(backimage); //draws out background.
-
-
-
   if (!gameOver) {
     handleInput();
 
@@ -236,8 +236,8 @@ function checkEating() {
     //Increases size of player when player eats prey.
     playerRadius = playerRadius + 0.5;
     //Player Speed becomes Slower the more it eats.
-    playerDefaultSpeed -= 0.05;
-    playerSprintSpeed -= 0.05;
+    playerDefaultSpeed -= 0.01;
+    playerSprintSpeed -= 0.01;
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
     // Reduce the prey health
@@ -254,6 +254,8 @@ function checkEating() {
       preyHealth = preyMaxHealth;
       // Track how many prey were eaten
       preyEaten = preyEaten + 1;
+      sparkle.play();//if player eats a meteor, sound plays
+      sparkle.setVolume(0.1);
     }
   }
 }
@@ -291,7 +293,8 @@ function movePrey() {
   }
 }
 function mousePressed() {
-  song.pause();
+song.pause();
+
 }
 // drawPrey()
 //
@@ -329,4 +332,7 @@ function showGameOver() {
   gameOverText = gameOverText + "before you FAINTED. \n Which lead to the end of \n THE WORLD."
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
+
+  song.stop();//Music Stops as soon
+
 }
