@@ -63,8 +63,10 @@ let oceanbg;// Declared Variable for background image
 let weirdoceanbg; //Declared Variable for 2nd background image
 let bubble;
 
+let leftPaddleScore = 0;
+let rightPaddleScore = 0;
 
-
+let displayGameOver;
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
@@ -197,18 +199,16 @@ function updateBall() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x < 0)  {
-    background (255,0,0);
-
+    console.log("RightPoints");
+    rightPaddleScore += 1;
     return true;
-
   }
   else if (ball.x > width){
-
-    return true;
+console.log("LeftPoints");
+  leftPaddleScore +=1;
+  return true;
   }
-
-    return false;
-  }
+}
 
 
 // checkBallWallCollision()
@@ -247,18 +247,21 @@ function checkBallPaddleCollision(paddle) {
 
   // First check the ball is in the vertical range of the paddle
   if (ballBottom > paddleTop && ballTop < paddleBottom) {
-console.log;
+
 
 
     // Then check if it is touching the paddle horizontally
     if (ballLeft < paddleRight && ballRight > paddleLeft) {
       // Then the ball is touching the paddle
       // Reverse its vx so it starts travelling in the opposite direction
+
       ball.vx = -ball.vx;
       background(weirdoceanbg);
+
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
       beepSFX.play();
+
     }
   }
 }
