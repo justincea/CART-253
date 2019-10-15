@@ -60,7 +60,11 @@ let rightPaddle = {
 }
 
 let oceanbg;// Declared Variable for background image
-let weirdoceanbg;
+let weirdoceanbg; //Declared Variable for 2nd background image
+let bubble;
+
+
+
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
@@ -72,6 +76,7 @@ function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
   oceanbg = loadImage('assets/images/bg.png');
   weirdoceanbg = loadImage("assets/images/weirdocean.png");
+  bubble = loadImage("assets/images/bubble.png");
 
 }
 
@@ -242,6 +247,8 @@ function checkBallPaddleCollision(paddle) {
 
   // First check the ball is in the vertical range of the paddle
   if (ballBottom > paddleTop && ballTop < paddleBottom) {
+console.log;
+
 
     // Then check if it is touching the paddle horizontally
     if (ballLeft < paddleRight && ballRight > paddleLeft) {
@@ -268,8 +275,11 @@ function displayPaddle(paddle) {
 //
 // Draws the ball on screen as a square
 function displayBall() {
-  // Draw the ball
-  rect(ball.x, ball.y, ball.size, ball.size);
+  // Draw the ball as a bubble
+  push();
+  imageMode(CENTER);
+  image(bubble,ball.x, ball.y, ball.size, ball.size);
+  pop();
 }
 
 // resetBall()
@@ -278,9 +288,15 @@ function displayBall() {
 function resetBall() {
   // Initialise the ball's position and velocity
   ball.x = width / 2;
-  ball.y = height / 2;
-  ball.vx = ball.speed;
-  ball.vy = ball.speed;
+  ball.y = random(height);
+  if (random(0,1) < 0.5) {
+    ball.vx = ball.speed;
+  }
+  else {
+    ball.vx = -ball.speed;
+  }
+  ball.vy = random(-5,5);
+
 }
 
 // displayStartMessage()
