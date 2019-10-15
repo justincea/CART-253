@@ -59,6 +59,9 @@ let rightPaddle = {
   downKey: 40
 }
 
+let oceanbg;// Declared Variable for background image
+let weirdoceanbg;
+
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
 
@@ -67,6 +70,9 @@ let beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  oceanbg = loadImage('assets/images/bg.png');
+  weirdoceanbg = loadImage("assets/images/weirdocean.png");
+
 }
 
 // setup()
@@ -77,6 +83,7 @@ function preload() {
 function setup() {
   // Create canvas and set drawing modes
   createCanvas(640, 480);
+
   rectMode(CENTER);
   noStroke();
   fill(fgColor);
@@ -104,7 +111,7 @@ function setupPaddles() {
 // See how tidy it looks?!
 function draw() {
   // Fill the background
-  background(bgColor);
+background(oceanbg);// Sets background
 
   if (playing) {
     // If the game is in play, we handle input and move the elements around
@@ -184,13 +191,20 @@ function updateBall() {
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
-  if (ball.x < 0 || ball.x > width) {
+  if (ball.x < 0)  {
+    background (255,0,0);
+
+    return true;
+
+  }
+  else if (ball.x > width){
+
     return true;
   }
-  else {
+
     return false;
   }
-}
+
 
 // checkBallWallCollision()
 //
@@ -224,15 +238,17 @@ function checkBallPaddleCollision(paddle) {
   let paddleTop = paddle.y - paddle.h / 2;
   let paddleBottom = paddle.y + paddle.h / 2;
   let paddleLeft = paddle.x - leftPaddle.w / 2;
-  let paddleRight = paddle.x + paddle.w / 2;
+  let paddleRight = paddle.x + paddle.w / 2
 
   // First check the ball is in the vertical range of the paddle
   if (ballBottom > paddleTop && ballTop < paddleBottom) {
+
     // Then check if it is touching the paddle horizontally
     if (ballLeft < paddleRight && ballRight > paddleLeft) {
       // Then the ball is touching the paddle
       // Reverse its vx so it starts travelling in the opposite direction
       ball.vx = -ball.vx;
+      background(weirdoceanbg);
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
       beepSFX.play();
