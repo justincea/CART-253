@@ -1,6 +1,6 @@
 "use strict";
 
-// Pong
+// UnderWater Bubble-Pong
 // by Justin Cea
 //
 // A "simple" implementation of Pong with no scoring system
@@ -15,7 +15,7 @@ let playing = false;
 
 // Game colors (using hexadecimal)
 let bgColor = 0;
-let fgColor = 255;
+let fgColor = 35;
 
 // BALL
 
@@ -27,7 +27,7 @@ let ball = {
   size: 40,
   vx: 0,
   vy: 0,
-  speed: 5
+  speed: 6.5
 }
 
 // PADDLES
@@ -62,19 +62,20 @@ let rightPaddle = {
 
 let oceanbg;// Declared Variable for background image
 let weirdoceanbg; //Declared Variable for 2nd background image
-let bubble;
+let bubble;//declared variable for ball
 
-let leftPaddleScore = 0;
-let rightPaddleScore = 0;
+let leftPaddleScore = 0;//Declared Variable to allow the left paddle score to be 0
+let rightPaddleScore = 0;//Declared Variable to allow the right paddle score to be 0
 
-let gameOver = false;
+let gameOver = false;//declared variable for gameover
 
-let goPandaFont;
+let goPandaFont;//declared variable for downloaded font. (https://fontmeme.com/fonts/go-panda-font/)
 
-// A variable to hold the beep sound we will play on bouncing
-let bubblePopSFX;
-let waterSong;
-let winSong;
+
+let bubblePopSFX;//declared variable for sound effect of ball
+let waterSong;//declared variable for the song that plays during gameplay
+let winSong;//declared variable for winning sound
+
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
@@ -83,11 +84,13 @@ function preload() {
   bubblePopSFX = new Audio("assets/sounds/pop.mp3");
   waterSong = new Audio("assets/sounds/song.mp3");
   winSong = new Audio("assets/sounds/music.mp3");
+
   //backgrounds
   oceanbg = loadImage('assets/images/bg.png');
   weirdoceanbg = loadImage("assets/images/weirdocean.png");
   bubble = loadImage("assets/images/bubble.png");
 
+  //fonts
   goPandaFont = loadFont("assets/fonts/GoPanda.ttf");
 }
 
@@ -107,7 +110,7 @@ function setup() {
   setupPaddles();
   resetBall();
 
-  waterSong.play();
+  waterSong.play(); //Allows song to play throughout gameplay.
 
 }
 
@@ -130,7 +133,7 @@ function setupPaddles() {
 // See how tidy it looks?!
 function draw() {
   // Fill the background
-background(oceanbg);// Sets background
+background(oceanbg);// Sets main background
 
   if (playing) {
     // If the game is in play, we handle input and move the elements around
@@ -148,7 +151,7 @@ background(oceanbg);// Sets background
     // (Note how we can use a function that returns a truth value
     // inside a conditional!)
     if (ballIsOutOfBounds()) {
-        console.log(leftPaddleScore);
+      //allows a GameOver function to work if a paddle reaches 10 pts.
       if (leftPaddleScore === 10 || rightPaddleScore ===10) {
         gameOver = true;
         playing = false;
@@ -165,7 +168,7 @@ background(oceanbg);// Sets background
   else {
     // Otherwise we display the message to start the game
     displayStartMessage();
-
+    //allows game over screen to be shown
     if (gameOver == true){
       displayGameOver();
     }
@@ -222,14 +225,18 @@ function updateBall() {
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
+
+  //keeps track of points of the right paddle
   if (ball.x < 0)  {
     console.log("RightPoints");
-    rightPaddleScore += 1;
+    rightPaddleScore += 1;//adds a point to the right paddle for every score they make
     return true;
   }
+
+  //keeps track of points of the left paddle
   else if (ball.x > width){
 console.log("LeftPoints");
-  leftPaddleScore +=1;
+  leftPaddleScore +=1;//adds a point to the left paddle for every score they make
   return true;
   }
   return false;
@@ -281,7 +288,7 @@ function checkBallPaddleCollision(paddle) {
       // Reverse its vx so it starts travelling in the opposite direction
 
       ball.vx = -ball.vx;
-      background(weirdoceanbg);
+      background(weirdoceanbg);//for every collision the ball makes with a paddle, it hints the SECRET OCEAN
 
       // Play our bouncing sound effect by rewinding and then playing
       bubblePopSFX.currentTime = 0;
@@ -316,7 +323,7 @@ function displayBall() {
 function resetBall() {
   // Initialise the ball's position and velocity
   ball.x = width / 2;
-  ball.y = random(height);
+  ball.y = height/2;
   if (random(0,1) < 0.5) {
     ball.vx = ball.speed;
   }
@@ -335,10 +342,12 @@ function displayStartMessage() {
   textAlign(CENTER, CENTER);
   textSize(32);
   textFont(goPandaFont);
-  text("Welcome to Underwater \n Bubble-Pong \n First one to achieve 10 points\n will open the gate to the SECRET OCEAN \n CLICK TO START", width / 2, height / 2);
+  text("Welcome to Underwater \n Bubble-Pong \n  use AWSD or ARROWKEYS to NAVIGATE\n\n First one to achieve 10 points\n will open the gate to the SECRET OCEAN \n CLICK TO START", width / 2, height / 2);
   pop();
 }
+//Shows a GameOver message as soon as one of the paddles achieves 10 pts
 function displayGameOver(){
+
   if (leftPaddleScore === 10) {
   push();
   background(weirdoceanbg);
@@ -350,7 +359,6 @@ function displayGameOver(){
   winSong.play();
   pop();
 }
-
   if (rightPaddleScore=== 10){
     push();
     background(weirdoceanbg);
