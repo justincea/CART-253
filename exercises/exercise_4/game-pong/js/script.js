@@ -24,7 +24,7 @@ let fgColor = 255;
 let ball = {
   x: 0,
   y: 0,
-  size: 20,
+  size: 40,
   vx: 0,
   vy: 0,
   speed: 5
@@ -66,21 +66,29 @@ let bubble;
 
 let leftPaddleScore = 0;
 let rightPaddleScore = 0;
+
 let gameOver = false;
 
+let goPandaFont;
 
 // A variable to hold the beep sound we will play on bouncing
-let beepSFX;
-
+let bubblePopSFX;
+let waterSong;
+let winSong;
 // preload()
 //
 // Loads the beep audio for the sound of bouncing
 function preload() {
-  beepSFX = new Audio("assets/sounds/beep.wav");
+  //sounds
+  bubblePopSFX = new Audio("assets/sounds/pop.mp3");
+  waterSong = new Audio("assets/sounds/song.mp3");
+  winSong = new Audio("assets/sounds/music.mp3");
+  //backgrounds
   oceanbg = loadImage('assets/images/bg.png');
   weirdoceanbg = loadImage("assets/images/weirdocean.png");
   bubble = loadImage("assets/images/bubble.png");
 
+  goPandaFont = loadFont("assets/fonts/GoPanda.ttf");
 }
 
 // setup()
@@ -98,6 +106,9 @@ function setup() {
 
   setupPaddles();
   resetBall();
+
+  waterSong.play();
+
 }
 
 // setupPaddles()
@@ -138,7 +149,7 @@ background(oceanbg);// Sets background
     // inside a conditional!)
     if (ballIsOutOfBounds()) {
         console.log(leftPaddleScore);
-      if (leftPaddleScore === 2 || rightPaddleScore ===2) {
+      if (leftPaddleScore === 10 || rightPaddleScore ===10) {
         gameOver = true;
         playing = false;
       }
@@ -236,8 +247,8 @@ function checkBallWallCollision() {
     // It hit so reverse velocity
     ball.vy = -ball.vy;
     // Play our bouncing sound effect by rewinding and then playing
-    beepSFX.currentTime = 0;
-    beepSFX.play();
+    bubblePopSFX.currentTime = 0;
+    bubblePopSFX.play();
   }
 }
 
@@ -273,8 +284,8 @@ function checkBallPaddleCollision(paddle) {
       background(weirdoceanbg);
 
       // Play our bouncing sound effect by rewinding and then playing
-      beepSFX.currentTime = 0;
-      beepSFX.play();
+      bubblePopSFX.currentTime = 0;
+      bubblePopSFX.play();
 
     }
   }
@@ -323,21 +334,41 @@ function displayStartMessage() {
   push();
   textAlign(CENTER, CENTER);
   textSize(32);
-  text("CLICK TO START", width / 2, height / 2);
+  textFont(goPandaFont);
+  text("Welcome to Underwater \n Bubble-Pong \n First one to achieve 10 points\n will open the gate to the SECRET OCEAN \n CLICK TO START", width / 2, height / 2);
   pop();
 }
 function displayGameOver(){
+  if (leftPaddleScore === 10) {
   push();
+  background(weirdoceanbg);
   textAlign(CENTER,CENTER);
+  textFont(goPandaFont);
   textSize(32);
-  text(".:Game Over:.", 320,350);
+  text(".:Game Over:. \n Left Paddle WINS\n and has unlocked the SECRET OCEAN", 320,350);
+  waterSong.pause();
+  winSong.play();
   pop();
 }
 
+  if (rightPaddleScore=== 10){
+    push();
+    background(weirdoceanbg);
+    textAlign(CENTER,CENTER);
+    textFont(goPandaFont);
+    textSize(32);
+    text(".:Game Over:. \n Right Paddle WINS \n and has unlocked the SECRET OCEAN", 320,350);
+
+    waterSong.pause();
+    winSong.play();
+    pop();
+  }
+}
 // mousePressed()
 //
 // Here to require a click to start playing the game
 // Which will help us be allowed to play audio in the browser
 function mousePressed() {
   playing = true;
+  gameOver = false;
 }
