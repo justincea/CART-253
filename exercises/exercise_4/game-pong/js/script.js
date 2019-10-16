@@ -12,6 +12,7 @@
 // Whether the game has started
 let playing = false;
 
+
 // Game colors (using hexadecimal)
 let bgColor = 0;
 let fgColor = 255;
@@ -65,8 +66,8 @@ let bubble;
 
 let leftPaddleScore = 0;
 let rightPaddleScore = 0;
+let gameOver = false;
 
-let displayGameOver;
 
 // A variable to hold the beep sound we will play on bouncing
 let beepSFX;
@@ -136,15 +137,27 @@ background(oceanbg);// Sets background
     // (Note how we can use a function that returns a truth value
     // inside a conditional!)
     if (ballIsOutOfBounds()) {
+        console.log(leftPaddleScore);
+      if (leftPaddleScore === 2 || rightPaddleScore ===2) {
+        gameOver = true;
+        playing = false;
+      }
+
       // If it went off either side, reset it
       resetBall();
       // This is where we would likely count points, depending on which side
       // the ball went off...
     }
   }
+
+
   else {
     // Otherwise we display the message to start the game
     displayStartMessage();
+
+    if (gameOver == true){
+      displayGameOver();
+    }
   }
 
   // We always display the paddles and ball so it looks like Pong!
@@ -208,6 +221,7 @@ console.log("LeftPoints");
   leftPaddleScore +=1;
   return true;
   }
+  return false;
 }
 
 
@@ -310,6 +324,13 @@ function displayStartMessage() {
   textAlign(CENTER, CENTER);
   textSize(32);
   text("CLICK TO START", width / 2, height / 2);
+  pop();
+}
+function displayGameOver(){
+  push();
+  textAlign(CENTER,CENTER);
+  textSize(32);
+  text(".:Game Over:.", 320,350);
   pop();
 }
 
