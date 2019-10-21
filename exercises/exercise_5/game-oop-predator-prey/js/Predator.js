@@ -27,10 +27,15 @@ class Predator {
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
+
+    //Prey eaten
+    this.eat = 0;
+
     // Display properties
     this.fillColor = fillColor;
     this.radius = this.health; // Radius is defined in terms of health
-    // Input properties
+
+    // Input properties for P1 and P2
     this.PL1upKey = UP_ARROW;
     this.PL1downKey = DOWN_ARROW;
     this.PL1leftKey = LEFT_ARROW;
@@ -40,6 +45,8 @@ class Predator {
     this.PL2downKey = 83; // S
     this.PL2leftKey = 65; // A
     this.PL2rightKey = 68; // D
+
+
     }
 
   // handleInput
@@ -67,6 +74,7 @@ class Predator {
     else {
       this.vy = 0;
     }
+
     //Sprint Feature
     if (keyIsDown(SHIFT)) {
   this.speed = this.sprintSpeed;
@@ -74,7 +82,7 @@ class Predator {
     else {
     this.speed = this.defaultSpeed;
     }
-  
+
   //////// player 2 input
   if (keyIsDown(this.PL2leftKey)) {
     this.vx = -this.speed;
@@ -94,13 +102,6 @@ class Predator {
   }
   else {
     this.vy = 0;
-  }
-  //Sprint Feature
-  if (keyIsDown(SHIFT)) {
-this.speed = this.sprintSpeed;
-}
-  else {
-  this.speed = this.defaultSpeed;
   }
 }
 
@@ -158,6 +159,8 @@ this.speed = this.sprintSpeed;
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
+        console.log("EatenPrey");
+        this.eat = this.eat + 1;
         prey.reset();
       }
     }
