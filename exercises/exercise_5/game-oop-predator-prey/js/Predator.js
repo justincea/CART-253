@@ -31,11 +31,16 @@ class Predator {
     this.fillColor = fillColor;
     this.radius = this.health; // Radius is defined in terms of health
     // Input properties
-    this.upKey = UP_ARROW;
-    this.downKey = DOWN_ARROW;
-    this.leftKey = LEFT_ARROW;
-    this.rightKey = RIGHT_ARROW;
-  }
+    this.PL1upKey = UP_ARROW;
+    this.PL1downKey = DOWN_ARROW;
+    this.PL1leftKey = LEFT_ARROW;
+    this.PL1rightKey = RIGHT_ARROW;
+
+    this.PL2upKey = 87; // W
+    this.PL2downKey = 83; // S
+    this.PL2leftKey = 65; // A
+    this.PL2rightKey = 68; // D
+    }
 
   // handleInput
   //
@@ -43,33 +48,61 @@ class Predator {
   // velocity appropriately.
   handleInput() {
     // Horizontal movement
-    if (keyIsDown(this.leftKey)) {
+    if (keyIsDown(this.PL1leftKey)) {
       this.vx = -this.speed;
     }
-    else if (keyIsDown(this.rightKey)) {
+    else if (keyIsDown(this.PL1rightKey)) {
       this.vx = this.speed;
     }
     else {
       this.vx = 0;
     }
     // Vertical movement
-    if (keyIsDown(this.upKey)) {
+    if (keyIsDown(this.PL1upKey)) {
       this.vy = -this.speed;
     }
-    else if (keyIsDown(this.downKey)) {
+    else if (keyIsDown(this.PL1downKey)) {
       this.vy = this.speed;
     }
     else {
       this.vy = 0;
     }
-    //sprint deature
+    //Sprint Feature
     if (keyIsDown(SHIFT)) {
   this.speed = this.sprintSpeed;
   }
     else {
     this.speed = this.defaultSpeed;
     }
+  
+  //////// player 2 input
+  if (keyIsDown(this.PL2leftKey)) {
+    this.vx = -this.speed;
   }
+  else if (keyIsDown(this.PL2rightKey)) {
+    this.vx = this.speed;
+  }
+  else {
+    this.vx = 0;
+  }
+  // Vertical movement
+  if (keyIsDown(this.PL2upKey)) {
+    this.vy = -this.speed;
+  }
+  else if (keyIsDown(this.PL2downKey)) {
+    this.vy = this.speed;
+  }
+  else {
+    this.vy = 0;
+  }
+  //Sprint Feature
+  if (keyIsDown(SHIFT)) {
+this.speed = this.sprintSpeed;
+}
+  else {
+  this.speed = this.defaultSpeed;
+  }
+}
 
   // move
   //
