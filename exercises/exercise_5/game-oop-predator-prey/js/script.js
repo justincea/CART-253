@@ -6,7 +6,7 @@
 // The predator loses health over time, so must keep eating to survive.
 
 // Our predator
-let tiger;
+let player;
 
 // The three prey
 let antelope;
@@ -19,12 +19,12 @@ let bee;
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40);
+  player = new Predator(100, 100, 5, color(200, 200, 0), 40);
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
   bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
-}
 
+}
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
@@ -33,21 +33,21 @@ function draw() {
   background(0);
 
   // Handle input for the tiger
-  tiger.handleInput();
+  player.handleInput();
 
   // Move all the "animals"
-  tiger.move();
+  player.move();
   antelope.move();
   zebra.move();
   bee.move();
 
   // Handle the tiger eating any of the prey
-  tiger.handleEating(antelope);
-  tiger.handleEating(zebra);
-  tiger.handleEating(bee);
+  player.handleEating(antelope);
+  player.handleEating(zebra);
+  player.handleEating(bee);
 
   // Display all the "animals"
-  tiger.display();
+  player.display();
   antelope.display();
   zebra.display();
   bee.display();

@@ -17,7 +17,11 @@ class Predator {
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;
-    this.speed = speed;
+    this.speed = 5;
+    this.sprintSpeed = 10;
+    this.defaultSpeed = 5;
+
+
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
@@ -57,6 +61,13 @@ class Predator {
     }
     else {
       this.vy = 0;
+    }
+    //sprint deature
+    if (keyIsDown(SHIFT)) {
+  this.speed = this.sprintSpeed;
+  }
+    else {
+    this.speed = this.defaultSpeed;
     }
   }
 
