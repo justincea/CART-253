@@ -20,8 +20,8 @@ let bee;
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  player = new Predator(100, 100, 5, color(200, 200, 0), 40);
-  player2 = new Predator(100,100,5,color(200,0,0),30);
+  player = new Predator(100, 100, 5, color(200, 200, 0), 40, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,76);
+  player2 = new Predator(200,200,5,color(200,0,0),40, 87,83,65,68,16);
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
   bee = new Prey(100, 100, 20, color(255, 255, 0), 10);

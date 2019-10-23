@@ -10,7 +10,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) {
+  constructor(x, y, speed, fillColor, radius, upKey, downKey,leftKey,rightKey,sprintKey) {
     // Position
     this.x = x;
     this.y = y;
@@ -36,15 +36,12 @@ class Predator {
     this.radius = this.health; // Radius is defined in terms of health
 
     // Input properties for P1 and P2
-    this.PL1upKey = UP_ARROW;
-    this.PL1downKey = DOWN_ARROW;
-    this.PL1leftKey = LEFT_ARROW;
-    this.PL1rightKey = RIGHT_ARROW;
+    this.upKey = upKey;
+    this.downKey = downKey;
+    this.leftKey = leftKey;
+    this.rightKey = rightKey;
+    this.sprintKey = sprintKey;
 
-    this.PL2upKey = 87; // W
-    this.PL2downKey = 83; // S
-    this.PL2leftKey = 65; // A
-    this.PL2rightKey = 68; // D
 
 
     }
@@ -55,20 +52,20 @@ class Predator {
   // velocity appropriately.
   handleInput() {
     // Horizontal movement
-    if (keyIsDown(this.PL1leftKey)) {
+    if (keyIsDown(this.leftKey)) {
       this.vx = -this.speed;
     }
-    else if (keyIsDown(this.PL1rightKey)) {
+    else if (keyIsDown(this.rightKey)) {
       this.vx = this.speed;
     }
     else {
       this.vx = 0;
     }
     // Vertical movement
-    if (keyIsDown(this.PL1upKey)) {
+    if (keyIsDown(this.upKey)) {
       this.vy = -this.speed;
     }
-    else if (keyIsDown(this.PL1downKey)) {
+    else if (keyIsDown(this.downKey)) {
       this.vy = this.speed;
     }
     else {
@@ -76,33 +73,12 @@ class Predator {
     }
 
     //Sprint Feature
-    if (keyIsDown(SHIFT)) {
+    if (keyIsDown(this.sprintKey)) {
   this.speed = this.sprintSpeed;
   }
     else {
     this.speed = this.defaultSpeed;
     }
-
-  //////// player 2 input
-  if (keyIsDown(this.PL2leftKey)) {
-    this.vx = -this.speed;
-  }
-  else if (keyIsDown(this.PL2rightKey)) {
-    this.vx = this.speed;
-  }
-  else {
-    this.vx = 0;
-  }
-  // Vertical movement
-  if (keyIsDown(this.PL2upKey)) {
-    this.vy = -this.speed;
-  }
-  else if (keyIsDown(this.PL2downKey)) {
-    this.vy = this.speed;
-  }
-  else {
-    this.vy = 0;
-  }
 }
 
   // move
@@ -175,7 +151,12 @@ class Predator {
     noStroke();
     fill(this.fillColor);
     this.radius = this.health;
+    textSize(12);
+
     ellipse(this.x, this.y, this.radius * 2);
+    textAlign(CENTER);
+    text("score:"+this.eat,this.x,this.y+50,this.radius*2);
+
     pop();
+    }
   }
-}
