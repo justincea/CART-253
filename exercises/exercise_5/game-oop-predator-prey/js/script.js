@@ -10,21 +10,30 @@ let player;
 let player2;
 
 // The three prey
-let antelope;
-let zebra;
-let bee;
+let fishA;
+let fishB;
+let fishC;
+
+let oceanImg;//declared variable for background
+let goPandaFont;//declared variable for font
 
 // setup()
 //
 // Sets up a canvas
 // Creates objects for the predator and three prey
+
+function preload(){
+  oceanImg = loadImage("assets/images/ocean.png");
+  goPandaFont = loadFont("assets/fonts/GoPanda.ttf");
+}
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  player = new Predator(100, 100, 5, color(200, 200, 0), 40, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,76);
-  player2 = new Predator(200,200,5,color(200,0,0),40, 87,83,65,68,16);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  createCanvas(700, 500);
+  player = new Predator(100, 100, 5, color(30, 104, 230), 40, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,76);
+  player2 = new Predator(600,100,5,color(15, 69, 184),40, 87,83,65,68,16);
+  fishA = new Prey(100, 100, 10, color(227, 118, 82), 50);
+  fishB = new Prey(100, 100, 8, color(217, 208, 78), 60);
+  fishC = new Prey(100, 100, 20, color(106, 196, 132), 10);
 
 }
 // draw()
@@ -32,7 +41,8 @@ function setup() {
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
   // Clear the background to black
-  background(0);
+  background(oceanImg);
+  displayStartMessage();
 
   // Handle input for the tiger
   player.handleInput();
@@ -41,24 +51,32 @@ function draw() {
   // Move all the "animals"
   player.move();
   player2.move();
-  antelope.move();
-  zebra.move();
-  bee.move();
+  fishA.move();
+  fishB.move();
+  fishC.move();
 
   // Handle the player 1 eating any of the prey
-  player.handleEating(antelope);
-  player.handleEating(zebra);
-  player.handleEating(bee);
+  player.handleEating(fishA);
+  player.handleEating(fishB);
+  player.handleEating(fishC);
 
   // Handle the player 2 eating any of the Prey
-  player2.handleEating(antelope);
-  player2.handleEating(zebra);
-  player2.handleEating(bee);
+  player2.handleEating(fishA);
+  player2.handleEating(fishB);
+  player2.handleEating(fishC);
 
   // Display all the "animals"
   player.display();
   player2.display();
-  antelope.display();
-  zebra.display();
-  bee.display();
+  fishA.display();
+  fishB.display();
+  fishC.display();
+}
+function displayStartMessage() { //Displays Instruction
+  push();
+  textAlign(CENTER,TOP);
+  textSize(36);
+  textFont(goPandaFont);
+  text("Welcome to UNDERWATER SURVIVAL \n use AWSD to navigate SHARK \n ARROWKEYS to navigate WHALE\n", width / 2, height / 2);
+  pop();
 }

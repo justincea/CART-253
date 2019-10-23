@@ -136,7 +136,7 @@ class Predator {
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
         console.log("EatenPrey");
-        this.eat = this.eat + 1;
+        this.eat = this.eat + 1;//adds a point to player who eats a prey
         prey.reset();
       }
     }
@@ -152,10 +152,9 @@ class Predator {
     fill(this.fillColor);
     this.radius = this.health;
     textSize(12);
-
     ellipse(this.x, this.y, this.radius * 2);
     textAlign(CENTER);
-    text("score:"+this.eat,this.x,this.y+50,this.radius*2);
+    text("score:"+this.eat,this.x,this.y+50,this.radius*2);//displays number of preys eatin by player
 
     pop();
     }
