@@ -5,7 +5,7 @@
 // the screen and be consumed by Predator objects.
 
 /////////////////////////
-// ~8 ERRORS IN HERE
+// ~7 ERRORS IN HERE
 /////////////////////////
 
 class Prey { //FIXED
