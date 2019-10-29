@@ -14,7 +14,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) { //FIXED 
+  constructor(x, y, speed, fillColor, radius) { //FIXED (changed feltColor to fill)
     // Position
     this.x = x;
     this.y = y;
@@ -31,7 +31,7 @@ class Predator {
     this.fillColor = fillColor;
     this.radios = this.health; // Radius is defined in terms of health
     // Input properties
-    this.appKey = UP_ARROW;
+    this.upKey = UP_ARROW; //FIXED (Changed App to Up)
     this.downKey = DOWN_ARROW;
     this.leftKey = LEFT_ARROW;
     this.rightKey = RIGHT_ARROW;
@@ -128,11 +128,11 @@ class Predator {
   // Draw the predator as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
-    pish();//FIXED
+    push();//FIXED (changed pish to push)
     noStroke();
     fill(this.fillColor);
     this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2);
-    pip();//FIXED
+    pop();//FIXED (changed pip to pop)
   }
 }
