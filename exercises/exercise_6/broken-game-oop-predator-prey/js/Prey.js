@@ -5,7 +5,7 @@
 // the screen and be consumed by Predator objects.
 
 /////////////////////////
-// ~7 ERRORS IN HERE
+// ~6 ERRORS IN HERE
 /////////////////////////
 
 class Prey { //FIXED
@@ -37,7 +37,7 @@ class Prey { //FIXED
   //
   // Sets velocity based on the noise() function and the Prey's speed
   // Moves based on the resulting velocity and handles wrapping
-  mover() {
+  move() { //FIXED (changed mover to move)
     // Set velocity via noise()
     this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
     this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
@@ -48,7 +48,7 @@ class Prey { //FIXED
     this.tx += 0.01;
     this.ty += 0.01;
     // Handle wrapping
-    this.handleWarping();
+    this.handleWrapping(); //FIXED (Changed warping to wrapping)
   }//FIXED
 
 
