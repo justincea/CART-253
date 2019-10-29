@@ -29,7 +29,7 @@ class Predator {
     this.healthGainPerEat = 1;
     // Display properties
     this.fillColor = fillColor;
-    this.radios = this.health; // Radius is defined in terms of health
+    this.radius = this.health; // Radius is defined in terms of health //FIXED
     // Input properties
     this.upKey = UP_ARROW; //FIXED (Changed App to Up)
     this.downKey = DOWN_ARROW;
@@ -108,7 +108,7 @@ class Predator {
   // the predator's. If the prey dies, it gets reset.
   handleEating(prey) {
     // Calculate distance from this predator to the prey
-    let d = dist(this.X, this.Y, prey.x, prey.y); //FIXED (missong dots [.])
+    let d = dist(this.x, this.y, prey.x, prey.y); //FIXED (missong dots [.])
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + prey.radius) {
       // Increase predator health and constrain it to its possible range
