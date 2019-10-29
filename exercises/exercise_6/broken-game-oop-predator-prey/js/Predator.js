@@ -5,7 +5,7 @@
 // the screen and consume Prey objects to maintain its health.
 
 /////////////////////
-// ~1 ERRORS IN HERE
+// ~0 ERRORS IN HERE
 /////////////////////
 
 class Predator {
@@ -14,7 +14,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) { //FIXED (changed feltColor to fill)
+  constructor(x, y, speed, fillColor, radius) { //FIXED (changed feltColor to fill and construction to constructor)
     // Position
     this.x = x;
     this.y = y;
@@ -56,7 +56,7 @@ class Predator {
     if (keyIsDown(this.upKey)) {
       this.vy = -this.speed;
     }
-    else if (keyIsDown(this.downKey)) {//FIXED
+    else if (keyIsDown(this.downKey)) { //FIXED (changed Clown to down T^T)
       this.vy = this.speed;
     }
     else {

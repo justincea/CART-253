@@ -1,7 +1,7 @@
 "use strict";
 
-// Predator-Prey Simulation
-// by Pippin Barr
+// Exercise 6: Predator-Prey Debugging
+// by Justin Cea
 //
 // Creates a predator and three prey (of different sizes and speeds)
 // The predator chases the prey using the arrow keys and consumes them.
