@@ -5,7 +5,7 @@
 // the screen and consume Prey objects to maintain its health.
 
 /////////////////////
-// ~4 ERRORS IN HERE
+// ~1 ERRORS IN HERE
 /////////////////////
 
 class Predator {
@@ -71,8 +71,8 @@ class Predator {
   // Handles wrapping
   move() {
     // Update position
-    this.x = this.vx;
-    this.y = this.vy;
+    this.x += this.vx;//FIXED missing [+] or [-] sign to allow them to move
+    this.y += this.vy;//FIXED missing [+] or [-] sign to allow them to move
     // Update health
     this.health = this.health - this.healthLossPerMove;
     this.health = constrain(this.health, 0, this.maxHealth);
@@ -108,7 +108,7 @@ class Predator {
   // the predator's. If the prey dies, it gets reset.
   handleEating(prey) {
     // Calculate distance from this predator to the prey
-    let d = dist(thisX, thisY, prey.x, prey.y);
+    let d = dist(this.X, this.Y, prey.x, prey.y); //FIXED (missong dots [.])
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + prey.radius) {
       // Increase predator health and constrain it to its possible range
@@ -118,7 +118,7 @@ class Predator {
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
-        prey.rest();
+        prey.reset();//FIXED (changed rest to REET)
       }
     }
   }
