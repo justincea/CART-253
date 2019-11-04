@@ -30,6 +30,7 @@ function setup() {
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
     background(0);
+    
     displayStartMessage();
 
   if (playing == true){
@@ -58,7 +59,7 @@ function draw() {
 
 function displayStartMessage() {
 push();
-textAlign(width / 2, height/2);
+textAlign(CENTER,CENTER);
 textSize(32);
 fill(255,0,0);
 text("Welcome \n  use AWSD or ARROWKEYS to NAVIGATE\n\n First one to achieve 10 points WINS \n CLICK TO START", width / 2, height / 2);
@@ -66,4 +67,5 @@ pop();
 }
 function mousePressed() {
   playing = true;
+  background(0);
 }
