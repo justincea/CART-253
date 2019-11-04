@@ -1,5 +1,5 @@
 // Predator-Prey Simulation
-// by Pippin Barr
+// by Justin Cea
 //
 // Creates a predator and three prey (of different sizes and speeds)
 // The predator chases the prey using the arrow keys and consumes them.
@@ -15,45 +15,56 @@ let bee;
 
 // setup()
 //
+function preload(){
+  holyCat = loadImage("assets/images/holycat.png");
+  redDemon = loadImage ("assets/images/demoncat.png");
+  yellowDemon = loadImage ("assets/images/demoncat_C.png");
+  greenDemon = loadImage ("assets/images/demoncat_B.png")
+
+  night = loadImage("assets/images/sky.png");
+}
 // Sets up a canvas
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(30, 104, 230), 40, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,16);
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
+  holy = new Predator(250, 250, 5, holyCat, 65, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,16);
+  red = new Enemy(100, 100, 15, redDemon, 75);
+  yellow = new Enemy(100, 100, 20, yellowDemon, 75);
+  green = new Enemy(100, 100, 10, greenDemon, 75);
 }
 
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
-    background(0);
-    
-    displayStartMessage();
+    background(night);
 
   if (playing == true){
 
   // Handle input for the tiger
-  tiger.handleInput();
+  holy.handleInput();
 
   // Move all the "animals"
-  tiger.move();
-  antelope.move();
-  zebra.move();
-  bee.move();
+  holy.move();
+  red.move();
+  yellow.move();
+  green.move();
 
   // Handle the tiger eating any of the prey
-  tiger.handleEating(antelope);
-  tiger.handleEating(zebra);
-  tiger.handleEating(bee);
+  holy.handleEating(red);
+  holy.handleEating(yellow);
+  holy.handleEating(green);
 
   // Display all the "animals"
-  tiger.display();
-  antelope.display();
-  zebra.display();
-  bee.display();
+  holy.display();
+  red.display();
+  yellow.display();
+  green.display();
+  }
+  else {
+    background (night);
+
+    displayStartMessage();
   }
 }
 
