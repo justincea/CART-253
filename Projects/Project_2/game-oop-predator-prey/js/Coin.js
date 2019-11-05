@@ -1,10 +1,10 @@
-// Prey
+// coin
 //
-// A class that represents a simple prey that moves
+// A class that represents a simple coin that moves
 // on screen based on a noise() function. It can move around
 // the screen and be consumed by Predator objects.
 
-class Prey {
+class Coin {
 
   // constructor
   //
@@ -31,7 +31,7 @@ class Prey {
 
   // move
   //
-  // Sets velocity based on the noise() function and the Prey's speed
+  // Sets velocity based on the noise() function and the coin's speed
   // Moves based on the resulting velocity and handles wrapping
   move() {
     // Set velocity via noise()
@@ -49,7 +49,7 @@ class Prey {
 
   // handleWrapping
   //
-  // Checks if the prey has gone off the canvas and
+  // Checks if the coin has gone off the canvas and
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
@@ -70,7 +70,7 @@ class Prey {
 
   // display
   //
-  // Draw the prey as an ellipse on the canvas
+  // Draw the coin as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
     push();

@@ -2,11 +2,11 @@
 //
 // A class that represents a simple predator
 // controlled by the arrow keys. It can move around
-// the screen and consume Prey objects to maintain its health.
+// the screen and consume coin objects to maintain its health.
 
 
 
-class Predator {
+class Hero {
 
   // constructor
   //
@@ -26,8 +26,8 @@ class Predator {
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
-    this.healthLossPerMove = 0.05;
-    this.healthGainPerEat = - 0.5;
+    this.healthLossPerMove = 0.01;
+    this.healthGainPerEat = 1;
     // Display properties
     this.image = image;
     this.radius = this.health; // Radius is defined in terms of health
@@ -115,24 +115,26 @@ class Predator {
 
   // handleEating
   //
-  // Takes a Prey object as an argument and checks if the predator
-  // overlaps it. If so, reduces the prey's health and increases
-  // the predator's. If the prey dies, it gets reset.
-  handleEating(enemy) {
-    // Calculate distance from this predator to the prey
+  // Takes a Enemy object as an argument and checks if the predator
+  // overlaps it. If so, reduces the Enemy's health and increases
+  // the predator's. If the Enemy dies, it gets reset.
+  handleEating(enemy,coin) {
+    // Calculate distance from this predator to the Enemy
     let d = dist(this.x, this.y, enemy.x, enemy.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + enemy.radius) {
-      // Increase predator health and constrain it to its possible range
-      this.health += this.healthGainPerEat;
+      // Increase hero health and constrain it to its possible range
+      this.health -= this.healthGainPerEat;
       this.health = constrain(this.health, 0, this.maxHealth);
-      // Decrease prey health by the same amount
-      // Check if the prey died and reset it if so
+      // Check if the Enemy died and reset it if so
       if (enemy.health < 0) {
         enemy.reset();
+    let p = dist(this.x,this.y,coin)
       }
     }
   }
+
+
 
   // display
   //
