@@ -73,13 +73,13 @@ class Coin {
     if (d < this.radius + hero.radius){
       this.health = this.health - 2.5;
 
-        if (this.health < 1) {
+        if (this.health < 1) {//Declared Variable for HERO absorbing coins
           console.log("EatenCoin");
           this.eat = this.eat + 1;
-
-          coinSound.play();
+          coinSound.play();//Coin Sound effect when collected
           this.reset();
-        if (this.eat == 9){
+
+        if (this.eat == 9){//Goal count for hero interms of collecting coins
           playing=false;
           gameOver=true;
           displayGameOver();

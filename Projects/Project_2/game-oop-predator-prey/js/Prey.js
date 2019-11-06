@@ -68,7 +68,7 @@ class Prey {
     }
   }
 
-  handleEating(hero){
+  handleEating(hero){ //Once Hero and Prey overlap Hero obtains a short boost
     let d = dist(this.x,this.y, hero.x, hero.y);
     if (d < this.radius + hero.radius){
         hero.speed=hero.speed*5;

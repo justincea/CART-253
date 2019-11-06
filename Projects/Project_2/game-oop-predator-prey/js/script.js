@@ -1,9 +1,10 @@
-// Predator-Prey Simulation
+// Predator-Prey Simulation - INVADED by DEMONCATS
 // by Justin Cea
 //
-// Creates a predator and three prey (of different sizes and speeds)
-// The predator chases the prey using the arrow keys and consumes them.
-// The predator loses health over time, so must keep eating to survive.
+// Creates a Hero and three DEMONCATS (of different speeds)
+// The DEMONCATS wander dangerously around the prey.
+// The HERO loses health over time, so they must keep absorbing LIFEPACKS in order to survive.
+//THe Goal is for the HERO to collect at least 9 coins in the goal to bribe the DEMONCATS away; back to their home planet.
 let playing = false;
 let gameOver = false;
 let winning = false;
@@ -40,8 +41,8 @@ let healthImage;
 let goPandaFont;
 let minecraftFont;
 
-let numPrey = 3;
-let prey = [];
+let numPrey = 3;// How many Preys to simulate
+let prey = [];// An empty array to store them in
 
 // setup()
 //
@@ -54,14 +55,14 @@ function preload(){
   yellowDemonImage = loadImage ("assets/images/demoncat_C.png");
   soldier =loadImage ("assets/images/civilCat.png");
   //Fonts//
-  goPandaFont = loadFont("assets/fonts/GoPanda.ttf");
-  minecraftFont = loadFont("assets/fonts/minecraftFont.ttf");
+  goPandaFont = loadFont("assets/fonts/GoPanda.ttf");//https://www.dafont.com/
+  minecraftFont = loadFont("assets/fonts/minecraftFont.ttf");//https://www.dafont.com/
   //Collectables//
   coinImage = loadImage("assets/images/coin.png");
   healthImage = loadImage ("assets/images/lifePack.png");
   //Sounds//
   song = loadSound("assets/sounds/song.mp3");
-
+  // Sound FX //
   coinSound = loadSound("assets/sounds/coinSound.mp3");
   healthSound = loadSound("assets/sounds/healthSound.mp3");
 
@@ -88,14 +89,14 @@ function setup() {
   green = new Enemy (100, 100, 5, greenDemonImage, 75);
   blue = new Prey (200,200,5,soldier,75);
 
-  // Run a for loop numPrey times to generate each Prey and put it in the array
+  // Generates each Prey and puts it in the array
   for (let i = 0; i < numPrey; i++) {
-    // Generate (mostly) random values for the arguments of the Prey constructor
+    // Arguments of the Prey constructor
     let preyX = random(0, width);
     let preyY = random(0, height);
     let preySpeed = random(2, 20);
     let preyRadius = 25;
-    // Create a new Prey objects with the random values
+    // New Prey objects with the random values
     prey.push(new Prey(preyX,preyY,preySpeed,soldier,preyRadius));
 
   }
@@ -112,7 +113,7 @@ function draw() {
   // Handle input for the tiger
   angel.handleInput();
 
-  // Move all the "animals"
+  // Move all the "Cats including HeroCat"
   angel.move();
 
   red.move();
@@ -120,6 +121,7 @@ function draw() {
   green.move();
   blue.move();
 
+// Move "Objects"
   coin.move();
   lifePack.move();
 
@@ -131,10 +133,11 @@ function draw() {
 
   coin.handleEating(angel);
   lifePack.handleEating(angel);
-  //
+
+  //Declared variable for Death
   angel.handleDeath();
   checkGameOver();
-  // Display all the "animals"
+  // Display all the "CATS"
   angel.display();
 
   red.display();
@@ -148,11 +151,11 @@ function draw() {
   prey[i].display();
   prey[i].handleEating(angel);
 }
-
+//Display all Objects
   coin.display();
   lifePack.display();
 
-  displayInstructions();
+  displayInstructions();//Declared Variable for Instructions
 
   }
   else {
@@ -169,8 +172,8 @@ function draw() {
 function displayInstructions(){
   //Black Rectangle
   fill(0);
+  //black border behind text to make it more visible
   rect(0, 0, 1000, 120);
-
   textAlign(CENTER);
   textSize(20);
   textFont(minecraftFont);
@@ -205,25 +208,25 @@ text(".: | DEMONCATS | :.",width/2,545);
 pop();
 }
 
-function checkGameOver() {
+function checkGameOver() {//checks if Hero is dead if so -> game over
   if (angel.death === true) {
     gameOver = true;
     playing = false;
   }
 }
-function displayGameOver() {
+function displayGameOver() { //Game Over Message
     push();
     textAlign(CENTER, CENTER);
     fill(0);
     textSize(49);
     let gameOverText="====. : GAME OVER: .===== \n"
     gameOverText = gameOverText+ "you've collected \n" +"======  " + coin.eat + " COINS  =======\n just enough to BRIBE \n the DEMONCATS back to \n their EVIL DIMENSION";
-
     text(gameOverText, width / 2, height / 2);
     song.stop();
     pop();
   }
-function mousePressed() {
+
+function mousePressed() { //Allows Game to start once Mouse is Pressed
     playing = true;
     gameOver = false;
     song.loop();
