@@ -71,9 +71,9 @@ class Prey {
   handleEating(hero){
     let d = dist(this.x,this.y, hero.x, hero.y);
     if (d < this.radius + hero.radius){
-      this.health = this.health - 2;
-        hero.health += hero.healthGainPerEat;
+        hero.speed=hero.speed*5;
         if (this.health < 3) {
+
           this.reset();
     }
   }

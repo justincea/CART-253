@@ -76,7 +76,15 @@ class Coin {
         if (this.health < 1) {
           console.log("EatenCoin");
           this.eat = this.eat + 1;
+
+          coinSound.play();
           this.reset();
+        if (this.eat == 9){
+          playing=false;
+          gameOver=true;
+          displayGameOver();
+        }
+
     }
   }
 }

@@ -19,7 +19,7 @@ class Hero {
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;
-    //
+    //Speed Variable
     this.speed = 5;
     this.sprintSpeed = 7;
     this.defaultSpeed = 5;
@@ -31,6 +31,7 @@ class Hero {
     this.healthLossPerTouch= 0.5;
     // Display properties
     this.image = image;
+    this.death = false;
     this.radius = this.health; // Radius is defined in terms of health
     // Input properties
     this.upKey = 87;
@@ -113,7 +114,11 @@ class Hero {
       this.y -= height;
     }
   }
-
+handleDeath(){
+  if (this.health<=0){
+    this.death = true;
+  }
+}
   // handleEating
   //
   // Takes a Enemy object as an argument and checks if the predator
@@ -138,7 +143,7 @@ class Hero {
 
   // display
   //
-  // Draw the predator as an ellipse on the canvas
+  // Draw the Hero as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
     push();
@@ -154,4 +159,5 @@ class Hero {
   }
     pop();
   }
+  
 }

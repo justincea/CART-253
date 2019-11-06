@@ -67,12 +67,11 @@ class HealthPack {
       this.health = this.health - 2;
         hero.health += hero.healthGainPerEat;
         if (this.health < 1) {
+          healthSound.play();
           this.reset();
     }
   }
 }
-
-
 
   // display
   //

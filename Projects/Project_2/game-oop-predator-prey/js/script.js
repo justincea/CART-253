@@ -6,6 +6,7 @@
 // The predator loses health over time, so must keep eating to survive.
 let playing = false;
 let gameOver = false;
+let winning = false;
 // Our Hero
 let angel;
 
@@ -18,8 +19,9 @@ let blue;
 //Colectable
 let coin;
 let lifePack;
-//Music
+//Music & Sounds
 let song;
+let coinSound;
 
 //Declared Variables for Images//
 let angelCatImage;
@@ -50,7 +52,7 @@ function preload(){
   redDemonImage = loadImage ("assets/images/demoncat.png");
   greenDemonImage = loadImage ("assets/images/demoncat_B.png");
   yellowDemonImage = loadImage ("assets/images/demoncat_C.png");
-  soldier =loadImage ("assets/images/demoncat_D.png");
+  soldier =loadImage ("assets/images/civilCat.png");
   //Fonts//
   goPandaFont = loadFont("assets/fonts/GoPanda.ttf");
   minecraftFont = loadFont("assets/fonts/minecraftFont.ttf");
@@ -59,9 +61,15 @@ function preload(){
   healthImage = loadImage ("assets/images/lifePack.png");
   //Sounds//
   song = loadSound("assets/sounds/song.mp3");
-  startingSong = loadSound("assets/sounds/startingsong.mp3");
+
+  coinSound = loadSound("assets/sounds/coinSound.mp3");
+  healthSound = loadSound("assets/sounds/healthSound.mp3");
+
+
+
   //Background//
   night = loadImage("assets/images/sky.png");
+  frontimage = loadImage("assets/images/frontimage.png");
 
 }
 // Sets up a canvas
@@ -71,6 +79,7 @@ function setup() {
   angel = new Hero (415, 400, 5, angelCatImage, 65, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,16);
 
   coin = new Coin (550, 250, 1, coinImage, 75);
+
 
   lifePack = new HealthPack (400,250, 1, healthImage,30);
 
@@ -122,6 +131,9 @@ function draw() {
 
   coin.handleEating(angel);
   lifePack.handleEating(angel);
+  //
+  angel.handleDeath();
+  checkGameOver();
   // Display all the "animals"
   angel.display();
 
@@ -140,15 +152,21 @@ function draw() {
   coin.display();
   lifePack.display();
 
-  displayWarning();
+  displayInstructions();
 
   }
   else {
+
+    if (gameOver ==true){
+      displayGameOver();
+    }
+    else{
     background (night);
     displayStartMessage();
+    }
   }
 }
-function displayWarning(){
+function displayInstructions(){
   //Black Rectangle
   fill(0);
   rect(0, 0, 1000, 120);
@@ -158,37 +176,55 @@ function displayWarning(){
   textFont(minecraftFont);
   fill(255);
   //Instructions
-  text("=====.:WARNING:.====== \n Demon Cats are VERY dangerous try to avoid them at ALL COST. \n Try your BEST to collect as many ressources you possibly can", width / 2, 35);
+  text("=====.:A real CATastrophe:.====== \n oh my. . .Demon Cats are taking over our LANDS. \n Try your BEST to collect at least 9 coins", width / 2, 38);
   fill(138, 12, 134);
   text("GOOD LUCK CHIEF!", width / 2, 115);
+  textSize(10);
+  fill(255);
+  text(" TIP:  HOLYCATS give you a short Speed-Boost",150,107);
+  text(" TIP:  Use HEALTHPACKs to help you survive",645,107);
+
 
 
 }
 function displayStartMessage() {
 push();
+background(frontimage);
 textAlign(CENTER,CENTER);
 textSize(25);
 textFont(minecraftFont);
 fill(255);
+text(".:you:.",383,230);
 text("Demon Cats have invaded all of Cat-Universe. \n We need to bring a stop to their mischief \n before they steal all of our valuable resources.\n\n\n", width / 2, height/2);
 fill(0);
-text("CLICK TO START",width / 2, 450);
+text("CLICK TO START",width / 2, 430);
+fill(255);
+text("beware of",width/2, 485);
+textSize(64);
+text(".: | DEMONCATS | :.",width/2,545);
 pop();
 }
 
-function showGameOver() {
-  // Set up the font
-  if (hero.eat == 2){
-  textSize(32);
-  textAlign(CENTER, CENTER);
-  fill(0);
-  // Set up the text to display
-  let gameOverText = ".:GAME OVER:.\n";
-  text(gameOverText, width / 2, height / 2);
-  let gameOver = true;
+function checkGameOver() {
+  if (angel.death === true) {
+    gameOver = true;
+    playing = false;
   }
 }
+function displayGameOver() {
+    push();
+    textAlign(CENTER, CENTER);
+    fill(0);
+    textSize(49);
+    let gameOverText="====. : GAME OVER: .===== \n"
+    gameOverText = gameOverText+ "you've collected \n" +"======  " + coin.eat + " COINS  =======\n just enough to BRIBE \n the DEMONCATS back to \n their EVIL DIMENSION";
+
+    text(gameOverText, width / 2, height / 2);
+    song.stop();
+    pop();
+  }
 function mousePressed() {
-    playing = true
+    playing = true;
+    gameOver = false;
     song.loop();
 }
