@@ -1,5 +1,15 @@
-class Enemy {
+// Prey
+//
+// A class that represents a simple prey that moves
+// on screen based on a noise() function. It can move around
+// the screen and be consumed by Predator objects.
 
+class Prey {
+
+  // constructor
+  //
+  // Sets the initial values for the Predator's properties
+  // Either sets default values or uses the arguments provided
   constructor(x, y, speed, image, radius) {
     // Position
     this.x = x;
@@ -21,7 +31,7 @@ class Enemy {
 
   // move
   //
-  // Sets velocity based on the noise() function and the Enemy's speed
+  // Sets velocity based on the noise() function and the Prey's speed
   // Moves based on the resulting velocity and handles wrapping
   move() {
     // Set velocity via noise()
@@ -39,7 +49,7 @@ class Enemy {
 
   // handleWrapping
   //
-  // Checks if the Enemy has gone off the canvas and
+  // Checks if the prey has gone off the canvas and
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
@@ -58,18 +68,27 @@ class Enemy {
     }
   }
 
+  handleEating(hero){
+    let d = dist(this.x,this.y, hero.x, hero.y);
+    if (d < this.radius + hero.radius){
+      this.health = this.health - 2;
+        hero.health += hero.healthGainPerEat;
+        if (this.health < 3) {
+          this.reset();
+    }
+  }
+}
   // display
   //
-  // Draw the Enemy as an ellipse on the canvas
+  // Draw the prey as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
     push();
     noStroke();
+    imageMode(CENTER);
     this.radius = this.health;
-    imageMode(CENTER,CENTER);
     image(this.image,this.x, this.y, this.radius * 2,this.radius * 2);
     pop();
-
   }
 
   // reset

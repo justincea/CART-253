@@ -27,6 +27,7 @@ class Coin {
     // Display properties
     this.image = image;
     this.radius = this.health;
+    this.eat = 0;
   }
 
   // move
@@ -67,6 +68,20 @@ class Coin {
       this.y -= height;
     }
   }
+  handleEating(hero){
+    let d = dist(this.x,this.y, hero.x, hero.y);
+    if (d < this.radius + hero.radius){
+      this.health = this.health - 2.5;
+
+        if (this.health < 1) {
+          console.log("EatenCoin");
+          this.eat = this.eat + 1;
+          this.reset();
+    }
+  }
+}
+
+
 
   // display
   //

@@ -27,7 +27,8 @@ class Hero {
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     this.healthLossPerMove = 0.01;
-    this.healthGainPerEat = 1;
+    this.healthGainPerEat = 2.5;
+    this.healthLossPerTouch= 0.5;
     // Display properties
     this.image = image;
     this.radius = this.health; // Radius is defined in terms of health
@@ -118,18 +119,17 @@ class Hero {
   // Takes a Enemy object as an argument and checks if the predator
   // overlaps it. If so, reduces the Enemy's health and increases
   // the predator's. If the Enemy dies, it gets reset.
-  handleEating(enemy,coin) {
+  handleEating(enemy) {
     // Calculate distance from this predator to the Enemy
     let d = dist(this.x, this.y, enemy.x, enemy.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + enemy.radius) {
       // Increase hero health and constrain it to its possible range
-      this.health -= this.healthGainPerEat;
+      this.health -= this.healthLossPerTouch;
       this.health = constrain(this.health, 0, this.maxHealth);
       // Check if the Enemy died and reset it if so
       if (enemy.health < 0) {
         enemy.reset();
-    let p = dist(this.x,this.y,coin)
       }
     }
   }
@@ -147,6 +147,10 @@ class Hero {
     imageMode(CENTER);
     if(this.radius > 1) {
     image(this.image,this.x, this.y, this.radius * 2,this.radius * 2);
+    fill(255);
+    textSize(12);
+    textFont(minecraftFont);
+    text("coins: "+coin.eat,this.x,this.y+50,this.radius*2);
   }
     pop();
   }
