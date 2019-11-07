@@ -81,8 +81,8 @@ class Coin {
 
         if (this.eat == 9){//Goal count for hero interms of collecting coins
           playing=false;
-          gameOver=true;
-          displayGameOver();
+          winning=true;
+          displayWinning();
         }
 
     }
