@@ -10,9 +10,7 @@ let playing = false;
 let gameOver = false;
 let winning = false;
 
-let levelOne = false;
-let levelTwo = false;
-let levelThree = false;
+
 
 // Our Hero
 let angel;
@@ -44,7 +42,6 @@ let minecraftFont;
 
 let numPrey = 5;// How many Preys to simulate
 let prey = []; // An empty array
-
 
 // setup()
 //
@@ -123,7 +120,7 @@ function draw() {
     background(night);
 
   if (playing == true){
-levelOne == true;
+
   // Handle input for the tiger
   angel.handleInput();
 
@@ -151,7 +148,7 @@ levelOne == true;
 
   //Declared variable for Death
   angel.handleDeath();
-
+  lifePack.display();
 
   // Display all the "CATS"
   angel.display();
@@ -159,25 +156,19 @@ levelOne == true;
   checkGameOver();
 
     if (angel.eat >= 2) {
-      levelTwo === true;
+
       green.display();
       prey = [];
 
+      let numPrey = 5;
       babyGreen.display();
       babyGreen.move();
       babyGreen.handleEating(angel);
-
-      let preyX = random(0, width);
-      let preyY = random(0, height);
-      let preySpeed = random(2, 20);
-      let preyRadius = 55;
-      prey.push(new Prey(preyX,preyY,preySpeed,soldierB,preyRadius));
     }
 
 
-    if(angel.eat >= 5) {
-        levelTwo === false;
-        levelThree === true;
+    if (angel.eat >= 5) {
+
         yellow.display();
 
 
@@ -186,7 +177,9 @@ levelOne == true;
         babyYellow.handleEating(angel);
       }
 
-
+    if (angel.eat>=10){
+      displayWinning();
+    }
 
 
 
@@ -200,7 +193,7 @@ levelOne == true;
 
 //Display all Objects
 
-  lifePack.display();
+
 
   displayInstructions();//Declared Variable for Instructions
 
