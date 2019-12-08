@@ -27,7 +27,7 @@ class Prey {
     // Display properties
     this.image = image;
     this.radius = this.health;
-    this.eat= 0;
+
   }
 
   // move
@@ -36,14 +36,9 @@ class Prey {
   // Moves based on the resulting velocity and handles wrapping
   move() {
     // Set velocity via noise()
-    this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
-    this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
-    // Update position
-    this.x += this.vx;
-    this.y += this.vy;
-    // Update time properties
-    this.tx += 0.01;
-    this.ty += 0.01;
+      this.vx = -7, -this.speed, this.speed;
+      // Update position
+      this.x += this.vx;
     // Handle wrapping
     this.handleWrapping();
   }
@@ -76,8 +71,9 @@ class Prey {
       hero.health = constrain(hero.health, 0, hero.maxHealth);
 
       this.health -= hero.healthGainPerEat;
-        if (this.health < 3) {
-          this.eat=this.eat +1;
+        if (this.health < 1) {
+          hero.eat=hero.eat +1;
+          console.log();
           this.reset();
     }
   }

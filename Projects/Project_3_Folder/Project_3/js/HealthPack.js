@@ -69,6 +69,7 @@ class HealthPack {
         if (this.health < 1) {
           healthSound.play();
           this.reset();
+          
     }
   }
 }

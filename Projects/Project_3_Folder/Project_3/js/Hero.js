@@ -40,6 +40,7 @@ class Hero {
     this.rightKey = 68;
     //
       this.sprintKey = sprintKey;
+      this.eat = 0;
   }
 
   // handleInput
@@ -141,6 +142,7 @@ handleDeath(){
 
 
 
+
   // display
   //
   // Draw the Hero as an ellipse on the canvas
@@ -155,7 +157,7 @@ handleDeath(){
     fill(255);
     textSize(12);
     textFont(minecraftFont);
-    text("prey: "+prey.eat,this.x,this.y+50,this.radius*2);
+    text("prey: "+ this.eat,this.x,this.y+50,this.radius*2);
   }
     pop();
   }

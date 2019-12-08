@@ -11,7 +11,7 @@ let gameOver = false;
 let winning = false;
 // Our Hero
 let angel;
-
+let angel2;
 // The three invaders
 let red;
 
@@ -24,14 +24,10 @@ let lifePack;
 let song;
 let coinSound;
 
-//Declared Variables for Images//
-let angelCatImage;
-
-let redDemonImage;
-let yellowDemonImage;
-let greenDemonImage;
-
-let soldier;
+//Declared Variables for Preys(soldiers)//
+let soldierA;
+let soldierB;
+let soldierC;
 
 let coinImage;
 
@@ -42,26 +38,36 @@ let goPandaFont;
 let minecraftFont;
 
 let numPrey = 5;// How many Preys to simulate
-let prey = [];// An empty array to store them in
+let prey = []; // An empty array
 
 // setup()
 //
 function preload(){
 
-  //Characters//
+  //Avatars//
   angelCatImage = loadImage("assets/images/holycat.png");
+  angelCat2Image = loadImage("assets/images/coincat.png");
+  //Demoncats//
   redDemonImage = loadImage ("assets/images/demoncat.png");
   greenDemonImage = loadImage ("assets/images/demoncat_B.png");
   yellowDemonImage = loadImage ("assets/images/demoncat_C.png");
-  soldier = loadImage ("assets/images/demoncatsoldierA.png");
+
+  //Enemies//
+  soldierA = loadImage ("assets/images/demoncatsoldierA.png");
+  soldierB = loadImage ("assets/images/demoncatsoldierB.png");
+  soldierC = loadImage ("assets/images/demoncatsoldierC.png");
+
   //Fonts//
   goPandaFont = loadFont("assets/fonts/GoPanda.ttf");//https://www.dafont.com/
   minecraftFont = loadFont("assets/fonts/minecraftFont.ttf");//https://www.dafont.com/
+
   //Collectables//
   coinImage = loadImage("assets/images/coin.png");
   healthImage = loadImage ("assets/images/lifePack.png");
+
   //Sounds//
   song = loadSound("assets/sounds/song.mp3");
+
   // Sound FX //
   coinSound = loadSound("assets/sounds/coinSound.mp3");
   healthSound = loadSound("assets/sounds/healthSound.mp3");
@@ -81,15 +87,16 @@ function setup() {
   createCanvas(800, 750);
   angel = new Hero (415, 400, 5, angelCatImage, 65, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,16);
 
-  coin = new Coin (550, 250, 1, coinImage, 75);
-
-
   lifePack = new HealthPack (400,250, 1, healthImage,30);
 
-  red = new Enemy (415, 100, 15, redDemonImage, 215);
+  red = new Enemy (415, 100, 15, redDemonImage, 100);
+  green = new Enemy (415, 100, 15, greenDemonImage, 100);
+  yellow = new Enemy (415, 100, 15, yellowDemonImage, 100);
 
-  babyRed = new Prey (200,200,5,soldier,75);
 
+  babyRed = new Prey (200,200,5,soldierA,55);
+  babyGreen = new Prey (200,200,5,soldierB,55);
+  babyYellow = new Prey (200,200,5,soldierC,55);
   // Generates each Prey and puts it in the array
   for (let i = 0; i < numPrey; i++) {
     // Arguments of the Prey constructor
@@ -98,7 +105,7 @@ function setup() {
     let preySpeed = random(2, 20);
     let preyRadius = 55;
     // New Prey objects with the random values
-    prey.push(new Prey(preyX,preyY,preySpeed,soldier,preyRadius));
+    prey.push(new Prey(preyX,preyY,preySpeed,soldierA,preyRadius));
 
   }
 }
@@ -118,28 +125,54 @@ function draw() {
   angel.move();
 
   red.move();
+  green.move();
+  yellow.move();
 
   babyRed.move();
 
 // Move "Objects"
-  coin.move();
+
   lifePack.move();
 
   // Handle the tiger eating any of the prey
   angel.handleEating(red);
+  angel.handleEating(green);
 
   angel.handleEating(babyRed);
 
-  coin.handleEating(angel);
+
   lifePack.handleEating(angel);
 
   //Declared variable for Death
   angel.handleDeath();
-  checkGameOver();
+
+
   // Display all the "CATS"
   angel.display();
 
-  red.display();
+  checkGameOver();
+
+    if (angel.eat == 2) {
+
+      green.display();
+      prey = [];
+
+      babyGreen.display();
+      babyGreen.move();
+      babyGreen.handleEating(angel);
+    }
+    else {
+
+      if (angel.eat === 3){
+        yellow.display();
+        prey = [];
+
+        babyYellow.display();
+        babyYellow.move();
+        babyYellow.handleEating(angel);
+      }
+    }
+
 
 
 
@@ -150,8 +183,9 @@ function draw() {
   prey[i].display();
   prey[i].handleEating(angel);
 }
+
 //Display all Objects
-  coin.display();
+
   lifePack.display();
 
   displayInstructions();//Declared Variable for Instructions
@@ -182,15 +216,15 @@ function displayInstructions(){
   textFont(minecraftFont);
   fill(255);
   //Instructions
-  text("=====.:A real CATastrophe once again:.====== \n Try your BEST to eat the DEMONCAT SOLDIERS", width / 2, 38);
-  fill(255,0,0);
+  text("=====.:A real CATastrophe again:.====== \n Try your BEST to eat the DEMONCAT SOLDIERS in order to eat the Red-DEMONCAT", width / 2, 38);
+  fill(138, 12, 134);
   text("GOOD LUCK CHIEF!", width / 2, 92);
   textSize(10);
   fill(255);
-  text(" TIP:  Avoid the big GUY",150,78);
+  text(" TIP:  HOLYCATS give you a short Speed-Boost",150,78);
   textSize(7.5);
   fill(255);
-  text("    TIP:  DEFEAT THE SOLDIERS FIRST",645,78);
+  text("    TIP:  Use SHIFT to sprint but by doin so it slowly drains your life",645,78);
 
 
 
@@ -227,7 +261,7 @@ function displayGameOver() { //Game Over Message
     fill(255);
     textSize(32);
     let gameOverText="\n\n\n\n\n\n\n\n\n\n\n\n====. : GAME OVER: .===== \n"
-    gameOverText = gameOverText+ "you've collected\n" +"====  " + coin.eat + " CATCOINS  ====\n it's NOT enough to drive \n the DEMONCATS back to \n their EVIL DIMENSION";
+    gameOverText = gameOverText+ "you've collected\n" +"====  " + prey.eat + " CATCOINS  ====\n it's NOT enough to drive \n the DEMONCATS back to \n their EVIL DIMENSION";
     text(gameOverText, width / 2, height / 2);
     song.stop();
     pop();
@@ -239,7 +273,7 @@ function displayGameOver() { //Game Over Message
       fill(255);
       textSize(49);
       let gameOverText="\n\n\n\n====. : YOU WIN : .===== \n"
-      gameOverText = gameOverText+ "you've collected ALL \n" +"=====  " + coin.eat + " CATCOINS  ======\n now the DEMONCATS have \n no choice but to go back to \n their EVIL DIMENSION";
+      gameOverText = gameOverText+ "you've collected ALL \n" +"=====  " + prey.eat + " CATCOINS  ======\n now the DEMONCATS have \n no choice but to go back to \n their EVIL DIMENSION";
       text(gameOverText, width / 2, height / 2);
       song.stop();
       pop();
@@ -247,5 +281,5 @@ function displayGameOver() { //Game Over Message
 function mousePressed() { //Allows Game to start once Mouse is Pressed
     playing = true;
     gameOver = false;
-    song.loop();
+
 }

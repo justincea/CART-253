@@ -1,6 +1,6 @@
 class Enemy {
 
-  constructor(x, y, speed, image, radius) {
+  constructor(x, y, speed, image,radius) {
     // Position
     this.x = x;
     this.y = y;
