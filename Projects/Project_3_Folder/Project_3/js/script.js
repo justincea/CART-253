@@ -9,6 +9,11 @@
 let playing = false;
 let gameOver = false;
 let winning = false;
+
+let levelOne = false;
+let levelTwo = false;
+let levelThree = false;
+
 // Our Hero
 let angel;
 let angel2;
@@ -39,6 +44,7 @@ let minecraftFont;
 
 let numPrey = 5;// How many Preys to simulate
 let prey = []; // An empty array
+
 
 // setup()
 //
@@ -117,7 +123,7 @@ function draw() {
     background(night);
 
   if (playing == true){
-
+levelOne == true;
   // Handle input for the tiger
   angel.handleInput();
 
@@ -152,26 +158,34 @@ function draw() {
 
   checkGameOver();
 
-    if (angel.eat == 2) {
-
+    if (angel.eat >= 2) {
+      levelTwo === true;
       green.display();
       prey = [];
 
       babyGreen.display();
       babyGreen.move();
       babyGreen.handleEating(angel);
-    }
-    else {
 
-      if (angel.eat === 3){
+      let preyX = random(0, width);
+      let preyY = random(0, height);
+      let preySpeed = random(2, 20);
+      let preyRadius = 55;
+      prey.push(new Prey(preyX,preyY,preySpeed,soldierB,preyRadius));
+    }
+
+
+    if(angel.eat >= 5) {
+        levelTwo === false;
+        levelThree === true;
         yellow.display();
-        prey = [];
+
 
         babyYellow.display();
         babyYellow.move();
         babyYellow.handleEating(angel);
       }
-    }
+
 
 
 
