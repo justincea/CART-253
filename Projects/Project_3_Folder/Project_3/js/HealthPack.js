@@ -65,11 +65,10 @@ class HealthPack {
     let d = dist(this.x,this.y, hero.x, hero.y);
     if (d < this.radius + hero.radius){
       this.health = this.health - 2;
-        hero.health += hero.healthGainPerEat;
+        hero.health += hero.healthGainPerEat; //Heals the Hero Cat Significantly
         if (this.health < 1) {
-          healthSound.play();
+          healthSound.play(); //Allows Sound FX to play for The Health Pack
           this.reset();
-          
     }
   }
 }

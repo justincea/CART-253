@@ -67,19 +67,18 @@ class Prey {
   handleEating(hero){ //Once Hero and Prey overlap Hero obtains a short boost
     let d = dist(this.x,this.y, hero.x, hero.y);
     if (d < this.radius + hero.radius){
-      hero.health += hero.healthGainPerEat;
+      hero.health += hero.healthGainPerEat;//Heals the Hero Cat Significantly
       hero.health = constrain(hero.health, 0, hero.maxHealth);
-
       this.health -= hero.healthGainPerEat;
         if (this.health < 1) {
-          hero.eat=hero.eat +1;
-          eatSound.play();
+          hero.eat=hero.eat +1; //Declared Variable for the num of Prey Eaten
+          eatSound.play(); //  Allows Sound FX to play when Hero eats a prey
           console.log();
           this.reset();
-          if (hero.eat>=15){
+          if (hero.eat>=15){ //Declares when the Game Ends as soon as hero eats 15 Preys
             playing = false;
             winning = true;
-            displayWinning();
+            displayWinning(); //Displays Winning Screen
           }
     }
   }

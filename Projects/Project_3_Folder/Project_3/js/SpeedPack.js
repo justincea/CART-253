@@ -65,15 +65,12 @@ class SpeedPack {
     let d = dist(this.x,this.y, hero.x, hero.y);
     if (d < this.radius + hero.radius){
       this.health = this.health - 2;
-      hero.health += hero.healthGainPerEat;
-        hero.speed = 10;
+      hero.health += hero.healthGainPerEat; //Heals the Hero Cat Significantly
+        hero.speed = 10; // Adjusts speed of Hero Cat as soon as it comes into contact
         if (this.health < 1) {
-          hero.image = angelCat2Image;
-
-          hero.speed = 10;
-          healthSound.play();
+          hero.image = angelCat2Image; //Changes The Cat Image to A Powered Up (updated) Image
+          healthSound.play(); //Allows Sound FX to Play when fully absorbed
           this.reset();
-
     }
   }
 }

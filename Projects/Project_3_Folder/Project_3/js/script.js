@@ -10,20 +10,24 @@ let playing = false;
 let gameOver = false;
 let winning = false;
 
-
-
 // Our Hero
 let angel;
 let angel2;
 // The three invaders
 let red;
+let yellow;
+let green;
 
+//The Three Soldiers
 let babyRed;
+let babyGreen;
+let babyYellow;
 
-//Colectable
+//Colectables
 let coin;
 let lifePack;
 let speedPack;
+
 //Music & Sounds
 let song;
 let coinSound;
@@ -34,9 +38,6 @@ let soldierB;
 let soldierC;
 let soldierD;
 
-let coinImage;
-
-let healthImage;
 
 //Declared Variable for Font
 let goPandaFont;
@@ -91,6 +92,7 @@ function preload(){
 }
 // Sets up a canvas
 // Creates objects for the predator and three prey
+
 function setup() {
   createCanvas(800, 750);
   angel = new Hero (415, 400, 5, angelCatImage, 65, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,16);
@@ -140,12 +142,7 @@ function draw() {
 
   lifePack.move();
   speedPack.move();
-  // Handle the tiger eating any of the prey
-
-
-
-
-
+  // Handle the Hero Cat Eating or in this case swallowing the Collectables
   lifePack.handleEating(angel);
   speedPack.handleEating(angel);
 
@@ -161,47 +158,50 @@ function draw() {
     if (angel.eat >= 5) {
       displayInstructionsLevel2();//Declared Variable for Instructions
 
+      //Displays Cats
       green.display();
       red.display();
 
+      //Enables movement for the RED & GREEN DemonCats
       red.move();
       green.move();
 
+      // Handles Hurting for HeroCat
       angel.handleEating(red);
       angel.handleEating(green);
 
-
-
+      //Displays, Enables Movement and Handles Eating of DemonCat Soldiers
+      prey = []; //Calls the Empty Array where there is no Basic Soldiers
       babyRed.display();
       babyRed.move();
       babyRed.handleEating(angel);
-
-      prey = [];
-
-
       babyGreen.display();
       babyGreen.move();
       babyGreen.handleEating(angel);
 
     }
 else {
+  //Displays The Text from function DisplayInstructionsLevel1
   displayInstructionsLevel1();
 }
 //lvl 3
     if (angel.eat >= 10) {
+
       displayInstructionsLevel3();
+        //Enables, Displays and Handles movement for the RED DemonCat
         red.move();
         red.display();
         angel.handleEating(red);
-
+        //Enables, Displays and Handles movement for the GREEN DemonCat
         green.move();
         green.display();
         angel.handleEating(green);
-
+        //Enables, Displays and Handles movement for the YELLOW DemonCat
         yellow.move();
         yellow.display();
         angel.handleEating(yellow);
 
+        //Enables, Displays and Handles movement for the Red & Yellow DemonCat Soldier
         babyRed.display();
         babyRed.move();
         babyRed.handleEating(angel);
@@ -218,7 +218,6 @@ else {
   prey[i].handleEating(angel);
 }
 
-//Display all Objects
 
 
   }
@@ -236,13 +235,6 @@ else {
     }
   }
 }
-
-function resetGame(){
-  gameOver = false;
-}
-
-
-
 function displayInstructionsLevel1(){
   //Black Rectangle
   push();
@@ -254,7 +246,8 @@ function displayInstructionsLevel1(){
   textSize(20);
   textFont(minecraftFont);
   fill(255);
-  //Instructions
+
+  //Instructions Text for LEVEL 1
   text("=====.:A real CATastrophe again:.====== \n Try your BEST to eat \n DEMONCAT SOLDIERS in order to beat Lvl 1", width / 2, 38);
 textSize(15);
 fill(96, 114, 125);
@@ -273,7 +266,7 @@ function displayInstructionsLevel2(){
   textSize(20);
   textFont(minecraftFont);
   fill(255);
-  //Instructions
+  //Instructions Text for LEVEL 2
   text("You've CAT to be kidding me!! \n Now you must attempt to eat 5 RED or/and GREEN \n DEMONCAT SOLDIERS in order to beat Lvl 2", width / 2, 38);
 
 textSize(15);
@@ -291,6 +284,7 @@ pop();
 function displayInstructionsLevel3(){
   push();
   fill(0);
+
   //black border behind text to make it more visible
   rectMode(CENTER);
   rect(400, 43, 650, 75);
@@ -358,4 +352,5 @@ function displayGameOver() { //Game Over Message
 function mousePressed() { //Allows Game to start once Mouse is Pressed
     playing = true;
     gameOver = false;
+    song.play();
 }

@@ -141,9 +141,6 @@ handleDeath(){
     }
   }
 
-
-
-
   // display
   //
   // Draw the Hero as an ellipse on the canvas
