@@ -23,6 +23,7 @@ let babyRed;
 //Colectable
 let coin;
 let lifePack;
+let speedPack;
 //Music & Sounds
 let song;
 let coinSound;
@@ -31,6 +32,7 @@ let coinSound;
 let soldierA;
 let soldierB;
 let soldierC;
+let soldierD;
 
 let coinImage;
 
@@ -42,6 +44,7 @@ let minecraftFont;
 
 let numPrey = 5;// How many Preys to simulate
 let prey = []; // An empty array
+
 
 // setup()
 //
@@ -59,7 +62,7 @@ function preload(){
   soldierA = loadImage ("assets/images/demoncatsoldierA.png");
   soldierB = loadImage ("assets/images/demoncatsoldierB.png");
   soldierC = loadImage ("assets/images/demoncatsoldierC.png");
-
+  soldierD = loadImage ("assets/images/demoncat_D.png");
   //Fonts//
   goPandaFont = loadFont("assets/fonts/GoPanda.ttf");//https://www.dafont.com/
   minecraftFont = loadFont("assets/fonts/minecraftFont.ttf");//https://www.dafont.com/
@@ -67,6 +70,7 @@ function preload(){
   //Collectables//
   coinImage = loadImage("assets/images/coin.png");
   healthImage = loadImage ("assets/images/lifePack.png");
+  speedImage = loadImage ("assets/images/speedPack.png");
 
   //Sounds//
   song = loadSound("assets/sounds/song.mp3");
@@ -74,7 +78,8 @@ function preload(){
   // Sound FX //
   coinSound = loadSound("assets/sounds/coinSound.mp3");
   healthSound = loadSound("assets/sounds/healthSound.mp3");
-
+  eatSound = loadSound("assets/sounds/eatSound.mp3");
+  hurtSound = loadSound("assets/sounds/hurtSound.mp3");
 
 
   //Background//
@@ -91,25 +96,27 @@ function setup() {
   angel = new Hero (415, 400, 5, angelCatImage, 65, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,16);
 
   lifePack = new HealthPack (400,250, 1, healthImage,30);
+  speedPack = new SpeedPack (600,250,1,speedImage,30);
 
-  red = new Enemy (415, 100, 15, redDemonImage, 100);
-  green = new Enemy (415, 100, 15, greenDemonImage, 100);
-  yellow = new Enemy (415, 100, 15, yellowDemonImage, 100);
+
+  red = new Enemy (415, 1002, 5, redDemonImage, 100);
+  green = new Enemy (415, 100, 10, greenDemonImage, 150);
+  yellow = new Enemy (415, 100, 15, yellowDemonImage, 125);
 
 
   babyRed = new Prey (200,200,5,soldierA,55);
-  babyGreen = new Prey (200,200,5,soldierB,55);
-  babyYellow = new Prey (200,200,5,soldierC,55);
+  babyGreen = new Prey (200,400,10,soldierB,55);
+  babyYellow = new Prey (200,200,15,soldierC,55);
+
   // Generates each Prey and puts it in the array
   for (let i = 0; i < numPrey; i++) {
     // Arguments of the Prey constructor
     let preyX = random(0, width);
     let preyY = random(0, height);
-    let preySpeed = random(2, 20);
+    let preySpeed = random(5, 20);
     let preyRadius = 55;
     // New Prey objects with the random values
-    prey.push(new Prey(preyX,preyY,preySpeed,soldierA,preyRadius));
-
+    prey.push(new Prey(preyX,preyY,preySpeed,soldierD,preyRadius));
   }
 }
 
@@ -120,69 +127,89 @@ function draw() {
     background(night);
 
   if (playing == true){
-
+  angel.display();
   // Handle input for the tiger
   angel.handleInput();
 
   // Move all the "Cats including HeroCat"
   angel.move();
 
-  red.move();
-  green.move();
-  yellow.move();
 
-  babyRed.move();
 
 // Move "Objects"
 
   lifePack.move();
-
+  speedPack.move();
   // Handle the tiger eating any of the prey
-  angel.handleEating(red);
-  angel.handleEating(green);
 
-  angel.handleEating(babyRed);
+
+
 
 
   lifePack.handleEating(angel);
+  speedPack.handleEating(angel);
 
   //Declared variable for Death
   angel.handleDeath();
   lifePack.display();
+  speedPack.display();
 
-  // Display all the "CATS"
-  angel.display();
 
   checkGameOver();
 
-    if (angel.eat >= 2) {
+//lvl 2
+    if (angel.eat >= 5) {
+      displayInstructionsLevel2();//Declared Variable for Instructions
 
       green.display();
+      red.display();
+
+      red.move();
+      green.move();
+
+      angel.handleEating(red);
+      angel.handleEating(green);
+
+
+
+      babyRed.display();
+      babyRed.move();
+      babyRed.handleEating(angel);
+
       prey = [];
 
-      let numPrey = 5;
+
       babyGreen.display();
       babyGreen.move();
       babyGreen.handleEating(angel);
+
     }
+else {
+  displayInstructionsLevel1();
+}
+//lvl 3
+    if (angel.eat >= 10) {
+      displayInstructionsLevel3();
+        red.move();
+        red.display();
+        angel.handleEating(red);
 
+        green.move();
+        green.display();
+        angel.handleEating(green);
 
-    if (angel.eat >= 5) {
-
+        yellow.move();
         yellow.display();
+        angel.handleEating(yellow);
 
+        babyRed.display();
+        babyRed.move();
+        babyRed.handleEating(angel);
 
         babyYellow.display();
         babyYellow.move();
         babyYellow.handleEating(angel);
       }
-
-    if (angel.eat>=10){
-      displayWinning();
-    }
-
-
-
 
   for (let i = 0; i < prey.length; i++) {
   // And for each one, move it and display it
@@ -193,9 +220,6 @@ function draw() {
 
 //Display all Objects
 
-
-
-  displayInstructions();//Declared Variable for Instructions
 
   }
   else {
@@ -208,37 +232,80 @@ function draw() {
     displayStartMessage();
     }
     if (winning === true){
-      displayWinning();
+    displayWinning();
     }
-
   }
 }
-function displayInstructions(){
+
+function resetGame(){
+  gameOver = false;
+}
+
+
+
+function displayInstructionsLevel1(){
   //Black Rectangle
+  push();
   fill(0);
   //black border behind text to make it more visible
-  rect(0, 0, 1000, 85);
+  rectMode(CENTER);
+  rect(400, 43, 650, 75);
   textAlign(CENTER);
   textSize(20);
   textFont(minecraftFont);
   fill(255);
   //Instructions
-  text("=====.:A real CATastrophe again:.====== \n Try your BEST to eat the DEMONCAT SOLDIERS in order to eat the Red-DEMONCAT", width / 2, 38);
-  fill(138, 12, 134);
-  text("GOOD LUCK CHIEF!", width / 2, 92);
-  textSize(10);
-  fill(255);
-  text(" TIP:  HOLYCATS give you a short Speed-Boost",150,78);
-  textSize(7.5);
-  fill(255);
-  text("    TIP:  Use SHIFT to sprint but by doin so it slowly drains your life",645,78);
+  text("=====.:A real CATastrophe again:.====== \n Try your BEST to eat \n DEMONCAT SOLDIERS in order to beat Lvl 1", width / 2, 38);
+textSize(15);
+fill(96, 114, 125);
+text ("5 BASIC",570, 58);
 
-
+pop();
 
 }
+function displayInstructionsLevel2(){
+  push();
+  fill(0);
+  //black border behind text to make it more visible
+  rectMode(CENTER);
+  rect(400, 43, 650, 75);
+  textAlign(CENTER);
+  textSize(20);
+  textFont(minecraftFont);
+  fill(255);
+  //Instructions
+  text("You've CAT to be kidding me!! \n Now you must attempt to eat 5 RED or/and GREEN \n DEMONCAT SOLDIERS in order to beat Lvl 2", width / 2, 38);
+
+textSize(15);
+
+rectMode(CENTER);
+fill(0);
+rect(398, 95, 300, 25);
+textAlign(CENTER);
+textSize(20);
+fill(255,0,0);
+text("BEWARE OF DEMONCATS",width / 2, 115);
+textFont(minecraftFont);
+pop();
+}
+function displayInstructionsLevel3(){
+  push();
+  fill(0);
+  //black border behind text to make it more visible
+  rectMode(CENTER);
+  rect(400, 43, 650, 75);
+  textAlign(CENTER);
+  textSize(20);
+  textFont(minecraftFont);
+  fill(255);
+  //Instructions
+  text("!!!BRACE YOURSELF!!! \n eat at least 5 more RED, YELLOW or/and GREEN \n DEMONCAT SOLDIERS in order to beat the FINAL LEVEL", width / 2, 38);
+pop();
+}
+
 function displayStartMessage() {
 push();
-background(117, 22, 35);
+background(54, 54, 54);
 textAlign(CENTER,CENTER);
 textSize(15);
 textFont(minecraftFont);
@@ -267,8 +334,9 @@ function displayGameOver() { //Game Over Message
     textAlign(CENTER, CENTER);
     fill(255);
     textSize(32);
+    textFont(minecraftFont);
     let gameOverText="\n\n\n\n\n\n\n\n\n\n\n\n====. : GAME OVER: .===== \n"
-    gameOverText = gameOverText+ "you've collected\n" +"====  " + prey.eat + " CATCOINS  ====\n it's NOT enough to drive \n the DEMONCATS back to \n their EVIL DIMENSION";
+    gameOverText = gameOverText+ "You Haven't EATEN ALL \n the DEMONCAT SOLDIERS... \n THE DEMONCATS HAVE INVADED ALL \n of CAT UNIVERSE";
     text(gameOverText, width / 2, height / 2);
     song.stop();
     pop();
@@ -278,15 +346,16 @@ function displayGameOver() { //Game Over Message
       background(win);
       textAlign(CENTER, CENTER);
       fill(255);
-      textSize(49);
+      textSize(45);
+      textFont(minecraftFont);
       let gameOverText="\n\n\n\n====. : YOU WIN : .===== \n"
-      gameOverText = gameOverText+ "you've collected ALL \n" +"=====  " + prey.eat + " CATCOINS  ======\n now the DEMONCATS have \n no choice but to go back to \n their EVIL DIMENSION";
+      gameOverText = gameOverText+ "you've eaten ALL 20 \n" + "== DEMONCAT SOLDIERS ==\n now the DEMONCATS \n are obliged to return to \n their EVIL DIMENSION!!";
       text(gameOverText, width / 2, height / 2);
       song.stop();
       pop();
     }
+
 function mousePressed() { //Allows Game to start once Mouse is Pressed
     playing = true;
     gameOver = false;
-
 }

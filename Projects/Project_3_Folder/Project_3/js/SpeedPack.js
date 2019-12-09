@@ -1,10 +1,4 @@
-// Prey
-//
-// A class that represents a simple prey that moves
-// on screen based on a noise() function. It can move around
-// the screen and be consumed by Predator objects.
-
-class Prey {
+class SpeedPack {
 
   // constructor
   //
@@ -27,25 +21,29 @@ class Prey {
     // Display properties
     this.image = image;
     this.radius = this.health;
-
   }
 
   // move
   //
-  // Sets velocity based on the noise() function and the Prey's speed
+  // Sets velocity based on the noise() function and the coin's speed
   // Moves based on the resulting velocity and handles wrapping
   move() {
     // Set velocity via noise()
-      this.vx = -7, -this.speed, this.speed;
-      // Update position
-      this.x += this.vx;
+    this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
+    this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
+    // Update position
+    this.x += this.vx;
+    this.y += this.vy;
+    // Update time properties
+    this.tx += 0.01;
+    this.ty += 0.01;
     // Handle wrapping
     this.handleWrapping();
   }
 
   // handleWrapping
   //
-  // Checks if the prey has gone off the canvas and
+  // Checks if the coin has gone off the canvas and
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
@@ -63,38 +61,35 @@ class Prey {
       this.y -= height;
     }
   }
-
-  handleEating(hero){ //Once Hero and Prey overlap Hero obtains a short boost
+  handleEating(hero){ //Once Hero overlaps LifePack, Hero gains a significant amount of health to help them survive
     let d = dist(this.x,this.y, hero.x, hero.y);
     if (d < this.radius + hero.radius){
+      this.health = this.health - 2;
       hero.health += hero.healthGainPerEat;
-      hero.health = constrain(hero.health, 0, hero.maxHealth);
-
-      this.health -= hero.healthGainPerEat;
+        hero.speed = 10;
         if (this.health < 1) {
-          hero.eat=hero.eat +1;
-          eatSound.play();
-          console.log();
+          hero.image = angelCat2Image;
+
+          hero.speed = 10;
+          healthSound.play();
           this.reset();
-          if (hero.eat>=15){
-            playing = false;
-            winning = true;
-            displayWinning();
-          }
+
     }
   }
 }
+
   // display
   //
-  // Draw the prey as an ellipse on the canvas
+  // Draw the coin as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
     push();
     noStroke();
-    imageMode(CENTER);
     this.radius = this.health;
+    imageMode(CENTER);
     image(this.image,this.x, this.y, this.radius * 2,this.radius * 2);
     pop();
+
   }
 
   // reset

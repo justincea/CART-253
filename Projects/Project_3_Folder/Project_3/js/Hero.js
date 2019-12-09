@@ -12,7 +12,7 @@ class Hero {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, image, radius, upKey, downKey,leftKey,rightKey,sprintKey) {
+  constructor(x, y, speed, image, radius, upKey, downKey,leftKey,rightKey) {
     // Position
     this.x = x;
     this.y = y;
@@ -21,14 +21,14 @@ class Hero {
     this.vy = 0;
     //Speed Variable
     this.speed = 5;
-    this.sprintSpeed = 7;
+
     this.defaultSpeed = 5;
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
     this.healthLossPerMove = 0.01;
     this.healthGainPerEat = 2.5;
-    this.healthLossPerTouch= 0.5;
+    this.healthLossPerTouch= 0.3;
     // Display properties
     this.image = image;
     this.death = false;
@@ -39,7 +39,7 @@ class Hero {
     this.leftKey = 65;
     this.rightKey = 68;
     //
-      this.sprintKey = sprintKey;
+
       this.eat = 0;
   }
 
@@ -133,6 +133,7 @@ handleDeath(){
       // Increase hero health and constrain it to its possible range
       this.health -= this.healthLossPerTouch;
       this.health = constrain(this.health, 0, this.maxHealth);
+
       // Check if the Enemy died and reset it if so
       if (enemy.health < 0) {
         enemy.reset();
@@ -157,7 +158,7 @@ handleDeath(){
     fill(255);
     textSize(12);
     textFont(minecraftFont);
-    text("prey: "+ this.eat,this.x,this.y+50,this.radius*2);
+    text("prey: "+ this.eat,this.x+10,this.y+50,this.radius*2);
   }
     pop();
   }

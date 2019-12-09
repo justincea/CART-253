@@ -169,10 +169,7 @@ function draw() {
     background (night);
     displayStartMessage();
     }
-    if (winning === true){
-      displayWinning();
-    }
-
+  
   }
 }
 function displayInstructions(){
