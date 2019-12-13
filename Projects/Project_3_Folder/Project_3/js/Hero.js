@@ -38,9 +38,8 @@ class Hero {
     this.downKey = 83;
     this.leftKey = 65;
     this.rightKey = 68;
-    //
+    this.eat = 0;
 
-      this.eat = 0;
   }
 
   // handleInput

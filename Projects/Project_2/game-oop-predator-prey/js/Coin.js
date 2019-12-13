@@ -79,7 +79,7 @@ class Coin {
           coinSound.play();//Coin Sound effect when collected
           this.reset();
 
-        if (this.eat == 1){//Goal count for hero interms of collecting coins
+        if (this.eat == 9){//Goal count for hero interms of collecting coins
           playing=false;
           winning=true;
           displayWinning();

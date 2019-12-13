@@ -69,9 +69,7 @@ class Enemy {
     imageMode(CENTER,CENTER);
     image(this.image,this.x, this.y, this.radius * 2,this.radius * 2);
     pop();
-
   }
-
   // reset
   //
   // Set the position to a random location and reset health

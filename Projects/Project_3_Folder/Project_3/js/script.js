@@ -54,6 +54,7 @@ function preload(){
   //Avatars//
   angelCatImage = loadImage("assets/images/holycat.png");
   angelCat2Image = loadImage("assets/images/coincat.png");
+  angelCat3Image = loadImage("assets/images/coincat2.png");
   //Demoncats//
   redDemonImage = loadImage ("assets/images/demoncat.png");
   greenDemonImage = loadImage ("assets/images/demoncat_B.png");
@@ -157,6 +158,7 @@ function draw() {
 //lvl 2
     if (angel.eat >= 5) {
       displayInstructionsLevel2();//Declared Variable for Instructions
+      angel.image = angelCat2Image;
 
       //Displays Cats
       green.display();
@@ -188,6 +190,8 @@ else {
     if (angel.eat >= 10) {
 
       displayInstructionsLevel3();
+        angel.image = angelCat3Image;
+
         //Enables, Displays and Handles movement for the RED DemonCat
         red.move();
         red.display();
@@ -217,9 +221,6 @@ else {
   prey[i].display();
   prey[i].handleEating(angel);
 }
-
-
-
   }
   else {
 
@@ -306,7 +307,7 @@ textFont(minecraftFont);
 fill(255);
 
 textSize(25);
-text("\n\nDemon Cats have invaded returned \nBIGGER & STRONGER\n We need to bring a stop to their mischief \n before they conquer all of CAT-UNIVERSE.\n\nUSE AWSD to move your PLAYER\n\n\n \n", width / 2, 350);
+text("\n\nDemon Cats have returned \nBIGGER & STRONGER\n We need to bring a stop to their mischief \n before they conquer all of CAT-UNIVERSE.\n\nUSE AWSD to move your PLAYER\n\n\n \n", width / 2, 350);
 fill(0);
 text("CLICK TO START",width / 2,485);
 fill(255);
